@@ -6,7 +6,8 @@ The following is if you would like to run this program locally on your machine; 
 ### Dependencies
 If you haven't already, install [Node.js](https://nodejs.org/en/download/) onto your machine.
 ### Installing
-Once you've downloaded the project, open it inside of your text editor and make sure the current directory is **ReplyTube**.  
+Once you've downloaded the project, open it inside of your text editor and make sure the current directory is **ReplyTube**.
+
 Enter in the following commands to get the project started:  
 
 ```npm install```  
