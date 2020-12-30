@@ -10,8 +10,10 @@ Once you've downloaded the project, open it inside of your text editor and make 
 
 Enter in the following commands to get the project started:  
 
-```npm install```  
+```npm install```
+
 This will install all of the neccessary npm dependencies.
 
-```npm start```  
+```npm start```
+
 This will start a server locally on your machine. To access it, enter ```localhost:3003``` into your web browser.
