@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
-  "author": "Manvir Dhillon",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
