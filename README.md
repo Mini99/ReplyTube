@@ -1,5 +1,5 @@
 # ReplyTube
-This project is a website designed to supplement Youtube-Comments-Extension
+This project is a website designed to supplement the [Youtube-Comments-Extension](https://github.com/YouTube-Comments-Extension).
 
 ## Getting Started
 The following is if you would like to run this program locally on your machine; otherwise, check out our official website on [ReplyTube](https://replytu.be/).
