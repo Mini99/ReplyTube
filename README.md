@@ -6,7 +6,11 @@ The following is if you would like to run this program locally on your machine; 
 ### Dependencies
 If you haven't already, install [Node.js](https://nodejs.org/en/download/) onto your machine.
 ### Installing
-Once you've downloaded the project, open it inside of your text editor and make sure the current directory is **ReplyTube**.
+Clone this repo via SSH:
+```
+https://github.com/Mini99/ReplyTube.git
+```
+Once you've cloned the project, open it inside of your text editor and make sure the current directory is **ReplyTube**.
 
 Install dependencies:
 ```
