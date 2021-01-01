@@ -8,7 +8,7 @@ If you haven't already, install [Node.js](https://nodejs.org/en/download/) onto 
 ### Installing
 Clone this repo via SSH:
 ```
-https://github.com/Mini99/ReplyTube.git
+git clone https://github.com/Mini99/ReplyTube.git
 ```
 Once you've cloned the project, open it inside of your text editor and make sure the current directory is **ReplyTube**.
 
