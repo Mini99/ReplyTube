@@ -8,14 +8,14 @@ If you haven't already, install [Node.js](https://nodejs.org/en/download/) onto 
 ### Installing
 Once you've downloaded the project, open it inside of your text editor and make sure the current directory is **ReplyTube**.
 
-Enter in the following commands to get the project started:  
-
-This will install all of the neccessary npm dependencies.
+Install dependencies:
 ```
 npm install
 ```
 
-This will start a server locally on your machine. To access it, enter ```localhost:3003``` into your web browser.
+Start local server:
 ```
 npm start
 ```
+
+To access it, enter `localhost:3003` into your browser.
