@@ -24,4 +24,4 @@ npm start
 
 To access it, enter `localhost:3003` into your browser.  
 
-*Note: You will not be able to make posts since requests are being pushed to a private database.*
+*Note: You will not be able to submit forms since requests are being pushed to a private database.*
