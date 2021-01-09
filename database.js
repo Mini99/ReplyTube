@@ -1,23 +1,23 @@
-// const mysql = require('mysql');
+const mysql = require('mysql');
 
-// class Database {
+class Database {
 
-//     constructor() {
-//         this.connect();
-//     }
+    constructor() {
+        this.connect();
+    }
 
-//     connect() {
-//         const connection = mysql.createConnection({
-//             host: 'localhost',
-//             user: 'root',
-//             password: '',
-//             database: 'replytube'
-//         });
-//         connection.connect((err) => {
-//             if (err) throw err;
-//             console.log('Connected to MySQL Server!');
-//         });
-//     }
-// }
+    connect() {
+        const connection = mysql.createConnection({
+            host: process.env.DATABASE_HOST,
+            user: process.env.DATABASE_USER,
+            password: process.env.DATABASE_PASSWORD,
+            database: process.env.DATABASE
+        });
+        connection.connect((err) => {
+            if (err) throw err;
+            console.log('Connected to MySQL Server!');
+        });
+    }
+}
 
-// module.exports = new Database();
+module.exports = new Database();
