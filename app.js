@@ -4,18 +4,7 @@ const port = 3003;
 const middleware = require('./middleware')
 const path = require('path')
 const bodyParser = require("body-parser")
-const mysql = require('mysql');
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'replytube'
-});
-
-connection.connect((err) => {
-    if (err) throw err;
-    console.log('Connected to MySQL Server!');
-});
+const mysql = require('./database');
 
 const server = app.listen(port, () => console.log("Server listening on port " + port));
 
