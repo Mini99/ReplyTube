@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const bodyParser = require("body-parser")
+const User = require('../query');
 
 app.set("view engine", "pug");
 app.set("views", "views");
