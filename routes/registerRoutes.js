@@ -34,42 +34,38 @@ router.post("/", async (req, res, next) => {
             database: process.env.DATABASE
         });
 
-        var sql = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
+        // var sql = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
 
-        password = await bcrypt.hash(password, 10);
+        // password = await bcrypt.hash(password, 10);
 
-        con.query(sql, [username, email, password], function (err, result) {
-            if (err) throw err;
-            console.log("1 record inserted");
-        });
+        // con.query(sql, [username, email, password], function (err, result) {
+        //     if (err) throw err;
+        //     console.log("1 record inserted");
+        // });
 
         // Code for checking if username or email is already taken
 
-        // var check = "SELECT * FROM users WHERE username=? or email=?";
-        // var user = con.query(check, [username, email], function (err, result) {
-        //     if (result.length != 0){
-        //         return 1;
-        //     }
-        // });
+        var check = "SELECT * FROM users WHERE username=? or email=?";
+        con.query(check, [username, email], function (err, result) {
+            if (result.length == 0){
+                console.log(result.username);
+                var sql = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
+                con.query(sql, [username, email, password], function (err, result) {
+                if (err) throw err;
+                    console.log("1 record inserted");
+                });
 
-        // if(user){
-        //     var sql = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
-        //     con.query(sql, [username, email, password], function (err, result) {
-        //     if (err) throw err;
-        //         console.log("1 record inserted");
-        //     });
-
-        //     res.status(200).render("login");
-        // }
-        // else {
-        //     if(email == user.email) {
-        //         payload.errorMessage = "Email already in use.";
-        //     }
-        //     else {
-        //         payload.errorMessage = "Username already in use.";
-        //     }
-        //     res.status(200).render("register", payload);
-        // }
+                res.status(200).render("login");
+            }
+            else if(result[0].username == username){
+                payload.errorMessage = "Username already in use.";
+                res.status(200).render("register", payload);
+            }
+            else {
+                payload.errorMessage = "Email already in use.";
+                res.status(200).render("register", payload);
+            }
+        });
         
         // make a close connection statement
     }
