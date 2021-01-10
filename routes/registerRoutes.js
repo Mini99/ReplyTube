@@ -34,28 +34,22 @@ router.post("/", async (req, res, next) => {
             database: process.env.DATABASE
         });
 
-        // var sql = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
-
-        // password = await bcrypt.hash(password, 10);
-
-        // con.query(sql, [username, email, password], function (err, result) {
-        //     if (err) throw err;
-        //     console.log("1 record inserted");
-        // });
-
         // Code for checking if username or email is already taken
 
+        req.body.password = await bcrypt.hash(password, 10);
+
         var check = "SELECT * FROM users WHERE username=? or email=?";
-        con.query(check, [username, email], function (err, result) {
+        
+        var user = con.query(check, [username, email], function (err, result) {
             if (result.length == 0){
-                console.log(result.username);
                 var sql = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
                 con.query(sql, [username, email, password], function (err, result) {
                 if (err) throw err;
                     console.log("1 record inserted");
                 });
 
-                res.status(200).render("login");
+                //req.session.user = user;
+                return res.redirect("/");
             }
             else if(result[0].username == username){
                 payload.errorMessage = "Username already in use.";
