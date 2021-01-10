@@ -32,7 +32,13 @@ router.post("/", (req, res, next) => {
             database: process.env.DATABASE
         });
 
-        
+        var sql = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
+        con.query(sql, [username, email, password], function (err, result) {
+        if (err) throw err;
+            console.log("1 record inserted");
+        });
+
+        res.status(200).render("login");
 
         // Code for checking if username or email is already taken
 
