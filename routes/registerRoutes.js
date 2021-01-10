@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const bodyParser = require("body-parser")
+const bcrypt = require('bcrypt');
 const mysql = require('mysql');
+const database = require('../database');
 
 app.set("view engine", "pug");
 app.set("views", "views");
@@ -15,7 +17,7 @@ router.get("/", (req, res, next) => {
     res.status(200).render("register");
 })
 
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
 
     var username = req.body.username.trim();
     var email = req.body.email.trim();
@@ -33,12 +35,13 @@ router.post("/", (req, res, next) => {
         });
 
         var sql = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
+
+        password = await bcrypt.hash(password, 10);
+
         con.query(sql, [username, email, password], function (err, result) {
-        if (err) throw err;
+            if (err) throw err;
             console.log("1 record inserted");
         });
-
-        res.status(200).render("login");
 
         // Code for checking if username or email is already taken
 
