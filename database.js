@@ -11,11 +11,10 @@ class Database {
     }
 
     connect() {
-        mongoose.connect("mongodb+srv://admin:juFnMdhEqR5lpzxx@replytubecluster.xinv4.mongodb.net/ReplyTubeDB?retryWrites=true&w=majority")
         .then(() => {
             console.log("database connection successful");
         })
-        .catch((error) => {
+        .catch((err) => {
             console.log("database connection error" + err);
         })
     }
