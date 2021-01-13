@@ -1,4 +1,8 @@
-const mysql = require('mysql');
+const mongoose = require('mongoose');
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useUnifiedTopology', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useUnifiedTopology', true);
 
 class Database {
 
@@ -7,16 +11,13 @@ class Database {
     }
 
     connect() {
-        const connection = mysql.createConnection({
-            host: process.env.DATABASE_HOST,
-            user: process.env.DATABASE_USER,
-            password: process.env.DATABASE_PASSWORD,
-            database: process.env.DATABASE
-        });
-        connection.connect((err) => {
-            if (err) throw err;
-            console.log('Connected to MySQL Server!');
-        });
+        mongoose.connect("mongodb+srv://admin:juFnMdhEqR5lpzxx@replytubecluster.xinv4.mongodb.net/ReplyTubeDB?retryWrites=true&w=majority")
+        .then(() => {
+            console.log("database connection successful");
+        })
+        .catch((error) => {
+            console.log("database connection error" + err);
+        })
     }
 }
 
