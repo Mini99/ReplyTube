@@ -56,7 +56,7 @@ router.post("/", async (req, res, next) => {
                 });
             }
             else if(result[0].username === username) {
-                payload.errorMessage = "User already in use.";
+                payload.errorMessage = "Username already in use.";
                 res.status(200).render("register", payload);
             }
             else if(result[0].email === email) {
