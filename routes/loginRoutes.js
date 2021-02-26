@@ -24,6 +24,8 @@ router.post("/", (req, res, next) => {
         password: req.body.logPassword,
     }
 
+    var payload = req.body;
+
     if(req.body.logEmail && req.body.logPassword) {
         const con = mysql.createConnection({
             host: process.env.DB_HOST,
@@ -40,13 +42,13 @@ router.post("/", (req, res, next) => {
                     return res.redirect("/");
                 }
                 else {
-                    var errorMessage = "Incorrect Password.";
-                    return res.status(200).render("login", {errorMessage});
+                    payload.errorMessage = "Incorrect Password.";
+                    return res.status(200).render("login", payload);
                 }
             }
             else {
-                var errorMessage = "User does not exist.";
-                return res.status(200).render("login", {errorMessage});
+                payload.errorMessage = "User does not exist.";
+                return res.status(200).render("login", payload);
             }
         });
     }
