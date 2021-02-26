@@ -26,7 +26,7 @@ router.post("/", (req, res, next) => {
 
     var payload = req.body;
 
-    if(req.body.logEmail && req.body.logPassword) {
+    if(req.body.logUsername && req.body.logPassword) {
         const con = mysql.createConnection({
             host: process.env.DB_HOST,
             user: process.env.DB_USER,
@@ -34,7 +34,7 @@ router.post("/", (req, res, next) => {
             database: process.env.DB_DATABASE
         });
 
-        con.query("SELECT * FROM users WHERE email='"+ req.body.logUsername +"'", async function(err, result, field){
+        con.query("SELECT * FROM users WHERE username='"+ req.body.logUsername +"' OR email='"+ req.body.logUsername +"'", async function(err, result, field){
             if(result.length > 0){
                 var comp = await bcrypt.compare(req.body.logPassword, result[0].password);
                 if(comp === true) {
