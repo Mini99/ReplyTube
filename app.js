@@ -30,5 +30,10 @@ app.use("/register", registerRoute);
 
 app.get("/", middleware.requireLogin, (req, res, next) => {
 
-    res.status(200).render("home");
+    var payload = {
+        pageTitle: "ReplyTube",
+        userLoggedIn: req.session.user
+    }
+
+    res.status(200).render("home", payload);
 })
