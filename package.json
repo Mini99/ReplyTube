@@ -1,0 +1,29 @@
+{
+  "name": "replytube",
+  "version": "1.0.0",
+  "description": "This project is a website designed to supplement the [Youtube-Comments-Extension](https://github.com/YouTube-Comments-Extension).",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mini99/ReplyTube.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mini99/ReplyTube/issues"
+  },
+  "homepage": "https://github.com/Mini99/ReplyTube#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mysql": "^2.18.1",
+    "pug": "^3.0.0"
+  }
+}
