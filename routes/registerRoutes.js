@@ -25,10 +25,10 @@ router.post("/", async (req, res, next) => {
     var user = {
         username: username,
         email: email,
-        password: password,
+        password: password
     }
 
-    var payload;
+    var payload = req.body;
 
     if(email && password) {
         const con = mysql.createConnection({
@@ -42,13 +42,9 @@ router.post("/", async (req, res, next) => {
 
         data.password = await bcrypt.hash(password, 10)
 
-        con.query("SELECT * FROM users WHERE username='"+ username +"'", function(err, result, field){
+        con.query("SELECT * FROM users WHERE username='"+ username +"' OR email='"+ email +"'", function(err, result, field){
             if(err){
                 console.log(err);
-            }
-            else if(result.length > 0) {
-                payload.errorMessage = "User already in use.";
-                res.status(200).render("register", payload);
             }
             else if(result.length === 0){
                 var sql = "INSERT INTO users (username, email, password) VALUES ('"+ username +"', '"+ email +"', '"+ data.password +"')";
@@ -58,6 +54,14 @@ router.post("/", async (req, res, next) => {
                     req.session.user = user;
                     return res.redirect("/");
                 });
+            }
+            else if(result[0].username === username) {
+                payload.errorMessage = "User already in use.";
+                res.status(200).render("register", payload);
+            }
+            else if(result[0].email === email) {
+                payload.errorMessage = "Email already in use.";
+                res.status(200).render("register", payload);
             }
             else {
                 console.log("MySQL error");
