@@ -25,7 +25,8 @@ router.post("/", async (req, res, next) => {
     var user = {
         username: username,
         email: email,
-        password: password
+        password: password,
+        profilePic: "profilePic.jpg"
     }
 
     var payload = req.body;
@@ -47,7 +48,7 @@ router.post("/", async (req, res, next) => {
                 console.log(err);
             }
             else if(result.length === 0){
-                var sql = "INSERT INTO users (username, email, password) VALUES ('"+ username +"', '"+ email +"', '"+ data.password +"')";
+                var sql = "INSERT INTO users (username, email, password, profilePic) VALUES ('"+ username +"', '"+ email +"', '"+ data.password +"', '"+ user.profilePic +"')";
                 con.query(sql, function (err, result) {
                     if (err) throw err;
                     console.log("1 record inserted");

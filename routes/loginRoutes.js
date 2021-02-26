@@ -21,7 +21,9 @@ router.post("/", (req, res, next) => {
 
     var user = {
         username: req.body.logUsername,
+        email: null,
         password: req.body.logPassword,
+        profilePic: null
     }
 
     var payload = req.body;
@@ -38,6 +40,8 @@ router.post("/", (req, res, next) => {
             if(result.length > 0){
                 var comp = await bcrypt.compare(req.body.logPassword, result[0].password);
                 if(comp === true) {
+                    user.email = result[0].email;
+                    user.profilePic = result[0].profilePic;
                     req.session.user = user;
                     return res.redirect("/");
                 }
