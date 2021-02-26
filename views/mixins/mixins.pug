@@ -1,18 +1,18 @@
-//- mixin createPostForm(userLoggedIn)
-//-     .postFormContainer
-//-         .userImageContainer
-//-             img(src=userLoggedIn.profilePic, alt="User's profile picture")
-//-         .textareaContainer
-//-             textarea#postTextarea(placeholder="YouTube URL")
-//-             .buttonsContainer
-//-                 button#submitSearchButton(disabled="") Search
-//-             h1#invalidUrl Invalid URL
+mixin createPostForm(userLoggedIn)
+    .postFormContainer
+        .userImageContainer
+            img(src=userLoggedIn.profilePic, alt="User's profile picture")
+        .textareaContainer
+            textarea#postTextarea(placeholder="YouTube URL")
+            .buttonsContainer
+                button#submitSearchButton(disabled="") Search
+            h1#invalidUrl Invalid URL
 
-//- mixin createCommentForm(userLoggedIn)
-//-     .commentFormContainer
-//-         .userImageContainer
-//-             img(src=userLoggedIn.profilePic, alt="User's profile picture")
-//-         .commentTextareaContainer
-//-             textarea#commentTextarea(placeholder="Comment")
-//-             .commentButtonsContainer
-//-                 button#submitPostButton(disabled="") Post
+mixin createCommentForm(userLoggedIn)
+    .commentFormContainer
+        .userImageContainer
+            img(src=userLoggedIn.profilePic, alt="User's profile picture")
+        .commentTextareaContainer
+            textarea#commentTextarea(placeholder="Comment")
+            .commentButtonsContainer
+                button#submitPostButton(disabled="") Post
