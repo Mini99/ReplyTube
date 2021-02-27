@@ -1,3 +1,13 @@
+header {
+    text-align: center;
+    color: #01C8C8;
+    font-size: 48px;
+}
+
+.loginHeader {
+    text-decoration: none;
+}
+
 body {
     background-color: rgb(23,23,23);
 }
