@@ -25,7 +25,15 @@ router.get("/", (req, res, next) => {
 })
 
 router.get("/:id", (req, res, next) => {
-    
+    con.query("SELECT * FROM posts WHERE urlId='"+ id +"'", function(err, result, field){
+        try {
+            console.log(result);
+            // res.status(200).send(result);
+        }
+        catch {
+            console.log(err);
+        }
+    });
 })
 
 router.post("/", async (req, res, next) => {
