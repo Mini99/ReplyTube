@@ -47,7 +47,7 @@ function createCommentHtml(postData) {
     return `<div class='post' data-id=${postData.postId}>
                 <div class='mainPostContentContainer'>
                     <div class='postImageContainer'>
-                        <img src='${postData.profilePic}'>
+                        <img src='/images/${postData.profilePic}'>
                     </div>
                     <div class='postContentContainer'>
                         <div class='header'>
