@@ -6,14 +6,14 @@ const mysql = require('mysql')
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-router.get("/", (req, res, next) => {
-    const con = mysql.createConnection({
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: process.env.DB_DATABASE
-    });
+const con = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DATABASE
+});
 
+router.get("/", (req, res, next) => {
     con.query("SELECT * FROM urls", function(err, result, field){
         try {
             res.status(200).send(result);
@@ -39,13 +39,6 @@ router.post("/", async (req, res, next) => {
         urlId: req.body.content,
         urlPic: req.body.thumbnail
     }
-
-    const con = mysql.createConnection({
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: process.env.DB_DATABASE
-    });
 
     con.query("SELECT * FROM urls WHERE urlId='"+ urlData.urlId +"'", function(err, result, field){
         try {
