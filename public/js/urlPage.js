@@ -69,9 +69,5 @@ function outputPosts(results, container) {
         var html = createCommentHtml(result)
         container.prepend(html);
     });
-
-    if(results.length == 0) {
-        container.prepend("<span class='noResults'>Nothing to show</span>")
-    }
 }
 

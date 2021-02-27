@@ -121,8 +121,4 @@ function outputUrls(results, container) {
         var html = createPostHtml(result)
         container.prepend(html);
     });
-
-    if(results.length == 0) {
-        container.prepend("<span class='noResults'>Nothing to show</span>")
-    }
 }
