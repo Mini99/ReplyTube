@@ -168,6 +168,28 @@ nav a:hover {
     flex: 1;
 }
 
+.post {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing);
+    cursor: pointer;
+    border-bottom: 1px solid var(--lightGrey);
+    flex-shrink: 0;
+}
+
+.mainPostContentContainer {
+    flex: 1;
+    display: flex;
+}
+
+.postContentContainer {
+    padding-left: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+}
+
 .commentFormContainer {
     display: flex;
     padding: var(--spacing);
