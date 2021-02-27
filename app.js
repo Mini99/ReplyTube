@@ -24,9 +24,11 @@ app.use(session({
 //Routes
 const loginRoute = require('./routes/loginRoutes');
 const registerRoute = require('./routes/registerRoutes');
+const urlRoute = require('./routes/urlRoutes');
 
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
+app.use("/urls", urlRoute);
 
 app.get("/", middleware.requireLogin, (req, res, next) => {
 
