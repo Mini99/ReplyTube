@@ -38,10 +38,11 @@ router.post("/", async (req, res, next) => {
     var postData = {
         content: req.body.content,
         postedBy: req.session.user.username,
-        urlId: req.body.urlId
+        urlId: req.body.urlId,
+        profilePic: req.session.user.profilePic
     }
 
-    con.query("INSERT INTO posts (content, postedBy, urlId) VALUES ('"+ postData.content +"', '"+ postData.postedBy +"', '"+ postData.urlId +"')", function(err, result, field){
+    con.query("INSERT INTO posts (content, postedBy, urlId, profilePic) VALUES ('"+ postData.content +"', '"+ postData.postedBy +"', '"+ postData.urlId +"', '"+ postData.profilePic +"')", function(err, result, field){
         try {
             res.status(200).send(postData);
         }
