@@ -71,12 +71,6 @@ $("#submitSearchButton").click(() => {
     window.location.href = '/urls/' + data.content;
 })
 
-$("#submitPostButton").click(() => {
-    $.get("../api/urls/" + urlId, results => {
-        console.log(results);
-    })
-})
-
 //https://www.youtube.com/watch?v=dQw4w9WgXcQ
 
 $(document).on("click", ".url", (event) => {
