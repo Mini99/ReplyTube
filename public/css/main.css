@@ -172,7 +172,6 @@ nav a:hover {
     display: flex;
     flex-direction: column;
     padding: var(--spacing);
-    cursor: pointer;
     border-bottom: 1px solid var(--lightGrey);
     flex-shrink: 0;
 }
