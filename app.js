@@ -21,14 +21,19 @@ app.use(session({
     saveUninitialized: false
 }))
 
-//Routes
+// Routes
 const loginRoute = require('./routes/loginRoutes');
 const registerRoute = require('./routes/registerRoutes');
 const urlRoute = require('./routes/urlRoutes');
 
+// Api routes
+const urlsApiRoute = require('./routes/api/urls');
+
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/urls", urlRoute);
+
+app.use("/api/urls", urlsApiRoute);
 
 app.get("/", middleware.requireLogin, (req, res, next) => {
 
