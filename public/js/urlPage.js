@@ -23,14 +23,30 @@ $("#commentTextarea").keyup(event => {
     }
 })
 
+var entityMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '/': '&#x2F;',
+    '`': '&#x60;',
+    '=': '&#x3D;'
+};
+  
+function escapeHtml (string) {
+    return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+        return entityMap[s];
+    });
+}
+
 $("#submitPostButton").click(() => {
     var button = $(event.target);
     var textbox = $("#commentTextarea");
 
     var urlId = window.location.href.slice(-11);
 
-    const originalString = textbox.val();
-    const strippedString = originalString.replace(/(<([^>]+)>)/gi, "");
+    const strippedString = escapeHtml(textbox.val());
 
     var data = {
         content: strippedString,
