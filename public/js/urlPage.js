@@ -29,8 +29,11 @@ $("#submitPostButton").click(() => {
 
     var urlId = window.location.href.slice(-11);
 
+    const originalString = textbox.val();
+    const strippedString = originalString.replace(/(<([^>]+)>)/gi, "");
+
     var data = {
-        content: textbox.val(),
+        content: strippedString,
         urlId: urlId
     }
 
@@ -51,6 +54,7 @@ function createCommentHtml(postData) {
                     </div>
                     <div class='postContentContainer'>
                         <div class='header'>
+                            <span class='username'><a href='/profile/${postData.postedBy}'>${postData.postedBy}</a></span>
                         </div>
                         <div class='postBody'>
                             <span>${postData.content}</span>

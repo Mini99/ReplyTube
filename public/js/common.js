@@ -20,8 +20,11 @@ $("#submitSearchButton").click(() => {
     var button = $(event.target);
     var textbox = $("#postTextarea");
 
+    const originalString = textbox.val();
+    const strippedString = originalString.replace(/(<([^>]+)>)/gi, "");
+
     var data = {
-        content: textbox.val(),
+        content: strippedString,
         thumbnail: null
     }
 
