@@ -1,20 +1,20 @@
-$("#postTextarea").keyup(event => {
-    var textbox = $(event.target);
-    var value = textbox.val().trim();
+// $("#postTextarea").keyup(event => {
+//     var textbox = $(event.target);
+//     var value = textbox.val().trim();
 
-    var submitButton = $("#submitSearchButton");
+//     var submitButton = $("#submitSearchButton");
 
-    if(submitButton.length == 0) return alert("No submit button found");
+//     if(submitButton.length == 0) return alert("No submit button found");
 
-    if(value == "") {
-        submitButton.prop("disabled", true);
-        return;
-    }
-    else { //value.startsWith("http://www.youtube.com/watch?v=") || value.startsWith("https://www.youtube.com/watch?v=") || value.startsWith("http://www.youtube.com/v/") || value.startsWith("https://www.youtube.com/v/") || value.startsWith("http://youtu.be/") || value.startsWith("https://youtu.be/")
-        submitButton.prop("disabled", false);
-        return;
-    }
-})
+//     if(value == "") {
+//         submitButton.prop("disabled", true);
+//         return;
+//     }
+//     else { //value.startsWith("http://www.youtube.com/watch?v=") || value.startsWith("https://www.youtube.com/watch?v=") || value.startsWith("http://www.youtube.com/v/") || value.startsWith("https://www.youtube.com/v/") || value.startsWith("http://youtu.be/") || value.startsWith("https://youtu.be/")
+//         submitButton.prop("disabled", false);
+//         return;
+//     }
+// })
 
 $("#submitSearchButton").click(() => {
     var button = $(event.target);
@@ -65,7 +65,7 @@ $("#submitSearchButton").click(() => {
         var html = createPostHtml(urlData);
         $(".postsContainer").prepend(html);
         textbox.val("");
-        button.prop("disabled", true);
+        //button.prop("disabled", true);
     })
 
     window.location.href = '/urls/' + data.content;
