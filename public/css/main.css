@@ -200,6 +200,10 @@ nav a:hover {
     flex: 1;
 }
 
+.username {
+    font-weight: bold;
+}
+
 .commentFormContainer {
     display: flex;
     padding: var(--spacing);
