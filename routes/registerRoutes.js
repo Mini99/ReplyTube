@@ -43,13 +43,15 @@ router.post("/", async (req, res, next) => {
 
         data.password = await bcrypt.hash(password, 10)
 
-        con.query("SELECT * FROM users WHERE username='"+ username +"' OR email='"+ email +"'", function(err, result, field){
+        var firstSql = "SELECT * FROM users WHERE username=? OR email=?";
+
+        con.query(firstSql, [username, email], function(err, result, field){
             if(err){
                 console.log(err);
             }
             else if(result.length === 0){
-                var sql = "INSERT INTO users (username, email, password, profilePic) VALUES ('"+ username +"', '"+ email +"', '"+ data.password +"', '"+ user.profilePic +"')";
-                con.query(sql, function (err, result) {
+                var secondSql = "INSERT INTO users (username, email, password, profilePic) VALUES (?,?,?,?)";
+                con.query(secondSql, [username, email, data.password, user.profilePic], function (err, result) {
                     if (err) throw err;
                     console.log("1 record inserted");
                     req.session.user = user;

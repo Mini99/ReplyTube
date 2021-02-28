@@ -24,6 +24,7 @@ router.get("/", (req, res, next) => {
     });
 })
 
+//possibly unused code
 router.get("/:id", (req, res, next) => {
     con.query("SELECT * FROM posts WHERE urlId='"+ id +"'", function(err, result, field){
         try {

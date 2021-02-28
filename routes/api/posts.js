@@ -18,7 +18,8 @@ router.get("/", (req, res, next) => {
 })
 
 router.get("/:id", (req, res, next) => {
-    con.query("SELECT * FROM posts WHERE urlId='"+ req.params.id +"'", function(err, result, field){
+    var sql = "SELECT * FROM posts WHERE urlId=?";
+    con.query(sql, req.params.id, function(err, result, field){
         try {
             res.status(200).send(result);
         }
@@ -42,7 +43,9 @@ router.post("/", async (req, res, next) => {
         profilePic: req.session.user.profilePic
     }
 
-    con.query("INSERT INTO posts (content, postedBy, urlId, profilePic) VALUES ('"+ postData.content +"', '"+ postData.postedBy +"', '"+ postData.urlId +"', '"+ postData.profilePic +"')", function(err, result, field){
+    var sql = "INSERT INTO posts (content, postedBy, urlId, profilePic) VALUES (?,?,?,?)";
+
+    con.query(sql, [postData.content, postData.postedBy, postData.urlId, postData.profilePic], function(err, result, field){
         try {
             res.status(200).send(postData);
         }
