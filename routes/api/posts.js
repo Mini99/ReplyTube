@@ -14,7 +14,7 @@ const con = mysql.createConnection({
 });
 
 router.get("/", (req, res, next) => {
-    
+    res.status(200).send(req.session.user.username);
 })
 
 router.get("/:id", (req, res, next) => {
