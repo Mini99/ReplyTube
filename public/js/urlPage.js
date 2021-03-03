@@ -4,6 +4,10 @@ $(document).ready(() => {
     $.get("/api/posts/" + urlId, results => {
         outputPosts(results, $(".commentsContainer"))
     })
+
+    $.get("/api/posts/", results => {
+        var currUser = results;
+    })
 })
 
 $("#commentTextarea").keyup(event => {
@@ -76,6 +80,11 @@ function createCommentHtml(postData) {
                             <span>${postData.content}</span>
                         </div>
                         <div class='postFooter'>
+                            <div class='postButtonContainer'>
+                                <button>
+                                <i class="far fa-thumbs-up"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

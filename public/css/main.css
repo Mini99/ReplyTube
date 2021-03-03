@@ -3,6 +3,7 @@
     --buttonHoverBg: #004747;
     --lightGrey: rgb(230, 236, 240);
     --spacing: 15px;
+    --greyButtonText: rgba(0,0,0,0.34);
 }
 
 * {
@@ -52,6 +53,12 @@ nav a {
 
 nav a.green {
     color: var(--green);
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    color: white;
 }
 
 nav a:hover {
@@ -246,4 +253,18 @@ nav a:hover {
     margin-right: calc(var(--spacing) + 50px);
     text-align: center;
     color: rgb(255, 70, 70);
+}
+
+.postFooter {
+    display: flex;
+    align-items: center;
+}
+
+.postFooter .postButtonContainer {
+    flex: 1;
+    display: flex;
+}
+
+.postFooter .postButtonContainer button {
+    padding: 0 5px;
 }
