@@ -61,6 +61,11 @@ button {
     color: white;
 }
 
+button i,
+button span {
+    pointer-events: none;
+}
+
 nav a:hover {
     background-color: var(--buttonHoverBg);
     color: var(--green);
@@ -267,4 +272,13 @@ nav a:hover {
 
 .postFooter .postButtonContainer button {
     padding: 0 5px;
+    font-size: 20px;
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+.postButtonContainer button:hover {
+    color: var(--green);
 }

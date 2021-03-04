@@ -53,8 +53,48 @@ router.post("/", async (req, res, next) => {
             console.log(err);
         }
     });
+})
 
-    
+router.put("/:id/like", async (req, res, next) => {
+
+    var postId = req.params.id;
+    var userId = req.session.user.username;
+
+    var sql = "SELECT * FROM likes WHERE user=? AND post=?";
+    con.query(sql, [userId, postId], function(err, result, field){
+        try {     
+            // Case where post is liked by user       
+            if(result.length > 0) {
+                sqlDeleteUserLikes = "DELETE FROM likes WHERE user=? AND post=?"
+                con.query(sqlDeleteUserLikes, [userId, postId]);
+
+                var sqlUpdateLikes = "UPDATE posts SET likes=likes-1 WHERE postId=?"
+                con.query(sqlUpdateLikes, postId);
+
+                var sqlSelectLikes = "SELECT likes FROM posts WHERE postId=?"
+                con.query(sqlSelectLikes, postId, function(err, result, field){
+                    res.status(200).send(result[0]);
+                });
+            }
+            // Case where post is not liked by user
+            else {
+                sqlUserLikes = "INSERT INTO likes (user, post) VALUES (?,?)";
+                con.query(sqlUserLikes, [userId, postId]);
+
+                var sqlUpdateLikes = "UPDATE posts SET likes=likes+1 WHERE postId=?"
+                con.query(sqlUpdateLikes, postId);
+
+                var sqlSelectLikes = "SELECT likes FROM posts WHERE postId=?"
+                con.query(sqlSelectLikes, postId, function(err, result, field){
+                    res.status(200).send(result[0]);
+                });
+            }
+        }
+        catch {
+            console.log(err);
+        }
+    });
+
     
 })
 

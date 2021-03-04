@@ -65,6 +65,34 @@ $("#submitPostButton").click(() => {
     })
 })
 
+$(document).on("click", ".likeButton", (event) => {
+    var button = $(event.target);
+    var postId = getPostIdFromElement(button);
+
+    if(postId === undefined) return;
+
+    $.ajax({
+        url: `/api/posts/${postId}/like`,
+        type: "PUT",
+        success: (postData) => {
+            
+            button.find("span").text(postData.likes);
+
+        }
+    })
+    
+})
+
+function getPostIdFromElement(element) {
+    var isRoot = element.hasClass("post");
+    var rootElement = isRoot == true ? element : element.closest(".post");
+    var postId = rootElement.data().id;
+
+    if(postId === undefined) return alert("Post id undefinded");
+
+    return postId;
+}
+
 function createCommentHtml(postData) {   
     
     return `<div class='post' data-id=${postData.postId}>
@@ -81,8 +109,9 @@ function createCommentHtml(postData) {
                         </div>
                         <div class='postFooter'>
                             <div class='postButtonContainer'>
-                                <button>
+                                <button class='likeButton'>
                                 <i class="far fa-thumbs-up"></i>
+                                <span>${postData.likes}</span>
                                 </button>
                             </div>
                         </div>
