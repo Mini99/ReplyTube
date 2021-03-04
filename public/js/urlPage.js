@@ -77,7 +77,7 @@ $(document).on("click", ".likeButton", (event) => {
         success: (postData) => {
             
             button.find("span").text(postData.likes);
-
+            
         }
     })
     
@@ -111,7 +111,7 @@ function createCommentHtml(postData) {
                             <div class='postButtonContainer'>
                                 <button class='likeButton'>
                                 <i class="far fa-thumbs-up"></i>
-                                <span>${postData.likes}</span>
+                                <span>${postData.likes || ""}</span>
                                 </button>
                             </div>
                         </div>
