@@ -73,6 +73,10 @@ router.put("/:id/like", async (req, res, next) => {
 
                 var sqlSelectLikes = "SELECT likes FROM posts WHERE postId=?"
                 con.query(sqlSelectLikes, postId, function(err, result, field){
+                    if(result[0].likes === 0){
+                        result[0].likes = "";
+                    }
+                    result[0].active = 1;
                     res.status(200).send(result[0]);
                 });
             }
@@ -86,6 +90,7 @@ router.put("/:id/like", async (req, res, next) => {
 
                 var sqlSelectLikes = "SELECT likes FROM posts WHERE postId=?"
                 con.query(sqlSelectLikes, postId, function(err, result, field){
+                    result[0].active = 0;
                     res.status(200).send(result[0]);
                 });
             }

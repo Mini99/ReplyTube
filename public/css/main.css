@@ -282,3 +282,7 @@ nav a:hover {
 .postButtonContainer button:hover {
     color: var(--green);
 }
+
+.postButtonContainer.green button.active {
+    color: var(--green);
+}

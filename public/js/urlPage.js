@@ -77,6 +77,13 @@ $(document).on("click", ".likeButton", (event) => {
         success: (postData) => {
             
             button.find("span").text(postData.likes);
+
+            if(postData.active === 0){
+                button.addClass("active");
+            }
+            else {
+                button.removeClass("active");
+            }
             
         }
     })
@@ -108,7 +115,7 @@ function createCommentHtml(postData) {
                             <span>${postData.content}</span>
                         </div>
                         <div class='postFooter'>
-                            <div class='postButtonContainer'>
+                            <div class='postButtonContainer green'>
                                 <button class='likeButton'>
                                 <i class="far fa-thumbs-up"></i>
                                 <span>${postData.likes || ""}</span>
