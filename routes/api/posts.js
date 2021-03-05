@@ -29,6 +29,23 @@ router.get("/:id", (req, res, next) => {
     });
 })
 
+router.get("/:id/checkLikes", (req, res, next) => {
+    var sql = "SELECT * FROM likes WHERE user=? and post=?";
+    con.query(sql, [req.session.user.username, req.params.id], function(err, result, field){
+        try {
+            if(result.length > 0) {
+                res.status(200).send("1");
+            }
+            else {
+                res.status(200).send("0");
+            }
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
 router.post("/", async (req, res, next) => {
 
     if(!req.body.content) {

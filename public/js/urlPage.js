@@ -101,6 +101,17 @@ function getPostIdFromElement(element) {
 }
 
 function createCommentHtml(postData) {   
+
+    var likeButtonActiveClass;
+
+    console.log(postData);
+
+    if(postData.active === "1"){
+        likeButtonActiveClass = "active";
+    }
+    else {
+        likeButtonActiveClass = "";
+    }
     
     return `<div class='post' data-id=${postData.postId}>
                 <div class='mainPostContentContainer'>
@@ -116,7 +127,7 @@ function createCommentHtml(postData) {
                         </div>
                         <div class='postFooter'>
                             <div class='postButtonContainer green'>
-                                <button class='likeButton'>
+                                <button class='likeButton ${likeButtonActiveClass}'>
                                 <i class="far fa-thumbs-up"></i>
                                 <span>${postData.likes || ""}</span>
                                 </button>
@@ -129,10 +140,13 @@ function createCommentHtml(postData) {
 
 function outputPosts(results, container) {
     container.html("");
-
     results.forEach(result => {
-        var html = createCommentHtml(result)
-        container.prepend(html);
+        $.get("/api/posts/" + result.postId + "/checkLikes", results => {
+            result.active = results;
+            var html = createCommentHtml(result)
+            container.prepend(html);
+        })
+        
     });
 }
 
