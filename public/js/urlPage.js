@@ -57,12 +57,23 @@ $("#submitPostButton").click(() => {
         urlId: urlId
     }
 
-    $.post("/api/posts", data, (postData, status, xhr) => {
-        var html = createCommentHtml(postData);
-        $(".commentsContainer").prepend(html);
-        textbox.val("");
-        button.prop("disabled", true);
+    $.ajax({
+        url: `/api/posts/${data.content}/${data.urlId}/comment`,
+        type: "POST",
+        success: (postData) => {
+            var html = createCommentHtml(postData);
+            $(".commentsContainer").prepend(html);
+            textbox.val("");
+            button.prop("disabled", true);
+        }
     })
+
+    // $.post("/api/posts", data, (postData, status, xhr) => {
+    //     var html = createCommentHtml(postData);
+    //     $(".commentsContainer").prepend(html);
+    //     textbox.val("");
+    //     button.prop("disabled", true);
+    // })
 })
 
 $(document).on("click", ".likeButton", (event) => {
@@ -103,8 +114,6 @@ function getPostIdFromElement(element) {
 function createCommentHtml(postData) {   
 
     var likeButtonActiveClass;
-
-    console.log(postData);
 
     if(postData.active === "1"){
         likeButtonActiveClass = "active";

@@ -46,31 +46,54 @@ router.get("/:id/checkLikes", (req, res, next) => {
     });
 })
 
-router.post("/", async (req, res, next) => {
-
-    if(!req.body.content) {
-        console.log("Content param not sent with request");
-        return res.sendStatus(400);
-    }
+router.post("/:content/:urlId/comment", async (req, res, next) => {
 
     var postData = {
-        content: req.body.content,
+        content: req.params.content,
         postedBy: req.session.user.username,
-        urlId: req.body.urlId,
+        urlId: req.params.urlId,
         profilePic: req.session.user.profilePic
     }
 
-    var sql = "INSERT INTO posts (content, postedBy, urlId, profilePic) VALUES (?,?,?,?)";
+    var sqlInsertPost = "INSERT INTO posts (content, postedBy, urlId, profilePic) VALUES (?,?,?,?)";
+    con.query(sqlInsertPost, [postData.content, postData.postedBy, postData.urlId, postData.profilePic]);
 
-    con.query(sql, [postData.content, postData.postedBy, postData.urlId, postData.profilePic], function(err, result, field){
+    var sqlSelectPost = "SELECT * FROM posts WHERE content=? AND postedBy=? AND urlID=? AND profilePic=?"
+    con.query(sqlSelectPost, [postData.content, postData.postedBy, postData.urlId, postData.profilePic], function(err, result, field){
         try {
-            res.status(200).send(postData);
+            res.status(200).send(result[0]);
         }
         catch {
             console.log(err);
         }
     });
 })
+
+// router.post("/", async (req, res, next) => {
+
+//     if(!req.body.content) {
+//         console.log("Content param not sent with request");
+//         return res.sendStatus(400);
+//     }
+
+//     var postData = {
+//         content: req.body.content,
+//         postedBy: req.session.user.username,
+//         urlId: req.body.urlId,
+//         profilePic: req.session.user.profilePic
+//     }
+
+//     var sql = "INSERT INTO posts (content, postedBy, urlId, profilePic) VALUES (?,?,?,?)";
+
+//     con.query(sql, [postData.content, postData.postedBy, postData.urlId, postData.profilePic], function(err, result, field){
+//         try {
+//             res.status(200).send(postData);
+//         }
+//         catch {
+//             console.log(err);
+//         }
+//     });
+// })
 
 router.put("/:id/like", async (req, res, next) => {
 
