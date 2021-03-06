@@ -1,8 +1,11 @@
 extends layouts/main-layout.pug
 
 block content
-    span #{profileUser.username}
-    .postsContainer
+    if !profileUser
+        span.errorMessage Check the url you are trying to access
+    else 
+        span #{profileUser}
+        .postsContainer
 
 block scripts
     script(src="/js/profile.js")

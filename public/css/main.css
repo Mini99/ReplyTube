@@ -286,3 +286,7 @@ nav a:hover {
 .postButtonContainer.green button.active {
     color: var(--green);
 }
+
+.errorMessage {
+    padding: var(--spacing);
+}

@@ -18,7 +18,7 @@ router.get("/", (req, res, next) => {
         pageTitle: req.session.user.username,
         userLoggedIn: req.session.user,
         userLoggedInJs: JSON.stringify(req.session.user),
-        profileUser: req.session.user
+        profileUser: req.session.user.username
     }
 
     res.status(200).render("profilePage", payload);
@@ -26,29 +26,33 @@ router.get("/", (req, res, next) => {
 
 router.get("/:username", async (req, res, next) => {
 
-    var payload = await getPayload(req.params.username, req.session.user.username);
+    var sql = "SELECT username FROM users WHERE username=?";
+    con.query(sql, req.params.username, function(err, result, field){
+        try {
+            if(result.length > 0) {
+                var payload = {
+                    pageTitle: req.params.username,
+                    userLoggedIn: req.session.user,
+                    userLoggedInJs: JSON.stringify(req.session.user),
+                    profileUser: req.params.username
+                }
+                res.status(200).render("profilePage", payload);
+            }
+            else {
+                var payload = {
+                    pageTitle: "User not found",
+                    userLoggedIn: req.session.user,
+                    userLoggedInJs: JSON.stringify(req.session.user)
+                }
+                res.status(200).render("profilePage", payload);
+            }
+        }
+        catch {
+            console.log(err);
+        }
+    });
 
-    res.status(200).render("profilePage", payload);
+    
 })
-
-async function getPayload(username, userLoggedIn) {
-    var user = await con.query("SELECT username FROM users WHERE username=?", username);
-    user = user.values;
-    if(user === 0) {
-        return {
-            pageTitle: "User not found",
-            userLoggedIn: userLoggedIn,
-            userLoggedInJs: JSON.stringify(req.session.user)
-        }
-    }
-    else {
-        return {
-            pageTitle: user,
-            userLoggedIn: userLoggedIn,
-            userLoggedInJs: JSON.stringify(userLoggedIn),
-            profileUser: username
-        }
-    }
-}
 
 module.exports = router;
