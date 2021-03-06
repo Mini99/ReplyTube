@@ -18,7 +18,8 @@ router.get("/", (req, res, next) => {
         pageTitle: req.session.user.username,
         userLoggedIn: req.session.user,
         userLoggedInJs: JSON.stringify(req.session.user),
-        profileUser: req.session.user.username
+        profileUser: req.session.user.username,
+        profilePic: req.session.user.profilePic
     }
 
     res.status(200).render("profilePage", payload);
@@ -26,7 +27,7 @@ router.get("/", (req, res, next) => {
 
 router.get("/:username", async (req, res, next) => {
 
-    var sql = "SELECT username FROM users WHERE username=?";
+    var sql = "SELECT * FROM users WHERE username=?";
     con.query(sql, req.params.username, function(err, result, field){
         try {
             if(result.length > 0) {
@@ -34,7 +35,8 @@ router.get("/:username", async (req, res, next) => {
                     pageTitle: req.params.username,
                     userLoggedIn: req.session.user,
                     userLoggedInJs: JSON.stringify(req.session.user),
-                    profileUser: req.params.username
+                    profileUser: req.params.username,
+                    profilePic: result[0].profilePic
                 }
                 res.status(200).render("profilePage", payload);
             }

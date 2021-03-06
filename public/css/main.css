@@ -290,3 +290,21 @@ nav a:hover {
 .errorMessage {
     padding: var(--spacing);
 }
+
+.profileHeaderContainer .coverPhotoContainer {
+    height: 180px;
+    background-color: var(--green);
+    position: relative;
+}
+
+.profileHeaderContainer .userImageContainer {
+    height: 132px;
+    width: 132px;
+    margin-left: var(--spacing);
+    position: absolute;
+    bottom: -66px;
+}
+
+.profileHeaderContainer .userImageContainer img {
+    border: 4px solid rgb(23,23,23);
+}
