@@ -308,3 +308,18 @@ nav a:hover {
 .profileHeaderContainer .userImageContainer img {
     border: 4px solid rgb(23,23,23);
 }
+
+.profileHeaderContainer  .userDetailsContainer {
+    margin-top: 60px;
+    padding: var(--spacing);
+}
+
+.likedVideosText {
+    display: flex;
+    justify-content: center;
+}
+
+.likedVideos {
+    border-bottom: 1px solid var(--lightGrey);
+    padding-bottom: var(--spacing);
+}

@@ -25,11 +25,10 @@ router.get("/", (req, res, next) => {
 })
 
 //possibly unused code
-router.get("/:id", (req, res, next) => {
-    con.query("SELECT * FROM posts WHERE urlId='"+ id +"'", function(err, result, field){
+router.get("/:username", (req, res, next) => {
+    con.query("SELECT DISTINCT * FROM urls INNER JOIN posts ON urls.urlId=posts.urlId INNER JOIN likes ON posts.postId=likes.post WHERE user='"+ req.params.username +"'", function(err, result, field){
         try {
-            console.log(result);
-            // res.status(200).send(result);
+            res.status(200).send(result);
         }
         catch {
             console.log(err);

@@ -4,12 +4,20 @@ block content
     if !profileUser
         span.errorMessage Check the url you are trying to access
     else 
+        script.
+            var profileUser = '!{profileUser}'
+
         .profileHeaderContainer 
             .coverPhotoContainer
 
                 .userImageContainer 
                     img(src="/images/" + profilePic, alt="User profile image")
-        .postsContainer
+            .userDetailsContainer 
+                span.displayName #{profileUser}
+            h1.likedVideosText Liked Videos
+            .likedVideos
+            
+        .urlsContainer
 
 block scripts
     script(src="/js/profile.js")
