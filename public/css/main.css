@@ -339,3 +339,7 @@ nav a:hover {
     color: var(--green);
     background-color: var(--buttonHoverBg);
 }
+
+.donateContent img {
+    width: 100%;
+}
