@@ -340,6 +340,17 @@ nav a:hover {
     background-color: var(--buttonHoverBg);
 }
 
+.donateContent {
+    font-size: 22px;
+    text-align: center;
+}
+
 .donateContent img {
-    width: 100%;
+    width: 50%;
+    padding: var(--spacing);
+}
+
+.donateContent a {
+    color: lightblue;
+    text-decoration: underline;
 }
