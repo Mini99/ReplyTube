@@ -29,6 +29,32 @@ router.get("/:id", (req, res, next) => {
     });
 })
 
+router.get("/:id/user", (req, res, next) => {
+    var sql = "SELECT * FROM posts WHERE postedBy=?";
+    con.query(sql, req.params.id, function(err, result, field){
+        try {
+            res.status(200).send(result);
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
+router.get("/:id/likedPosts", (req, res, next) => {
+    var sql = "SELECT * FROM posts INNER JOIN likes ON posts.postId=likes.post WHERE user=?";
+    con.query(sql, req.params.id, function(err, result, field){
+        try {
+            if(result.length > 0) {
+                res.status(200).send(result);
+            }
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
 router.get("/:id/checkLikes", (req, res, next) => {
     var sql = "SELECT * FROM likes WHERE user=? and post=?";
     con.query(sql, [req.session.user.username, req.params.id], function(err, result, field){

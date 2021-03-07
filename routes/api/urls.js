@@ -26,14 +26,14 @@ router.get("/", (req, res, next) => {
 
 //possibly unused code
 router.get("/:username", (req, res, next) => {
-    con.query("SELECT DISTINCT * FROM urls INNER JOIN posts ON urls.urlId=posts.urlId INNER JOIN likes ON posts.postId=likes.post WHERE user='"+ req.params.username +"'", function(err, result, field){
-        try {
-            res.status(200).send(result);
-        }
-        catch {
-            console.log(err);
-        }
-    });
+    // con.query("SELECT DISTINCT * FROM urls INNER JOIN posts ON urls.urlId=posts.urlId INNER JOIN likes ON posts.postId=likes.post WHERE user='"+ req.params.username +"'", function(err, result, field){
+    //     try {
+    //         res.status(200).send(result);
+    //     }
+    //     catch {
+    //         console.log(err);
+    //     }
+    // });
 })
 
 router.post("/", async (req, res, next) => {

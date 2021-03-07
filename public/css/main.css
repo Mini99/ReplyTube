@@ -314,12 +314,28 @@ nav a:hover {
     padding: var(--spacing);
 }
 
-.likedVideosText {
+.tabsContainer {
     display: flex;
-    justify-content: center;
+    border-bottom: 1px solid var(--lightGrey);
+    flex-shrink: 0;
 }
 
-.likedVideos {
-    border-bottom: 1px solid var(--lightGrey);
-    padding-bottom: var(--spacing);
+.tab {
+    flex: 1;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: grey;
+    font-weight: bold;
+}
+
+.tab.active {
+    color: var(--green);
+    border-bottom: 2px solid var(--green);
+}
+
+.tab:hover {
+    color: var(--green);
+    background-color: var(--buttonHoverBg);
 }

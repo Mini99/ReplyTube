@@ -16,3 +16,8 @@ mixin createCommentForm(userLoggedIn)
             textarea#commentTextarea(placeholder="Comment")
             .commentButtonsContainer
                 button#submitPostButton(disabled="") Post
+
+mixin createTab(name, href, isSelected) 
+    - className = isSelected ? "tab active" : "tab"
+    a(href=href, class=className) 
+        span #{name}
