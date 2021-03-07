@@ -341,13 +341,14 @@ nav a:hover {
 }
 
 .donateContent {
+    padding: var(--spacing);
     font-size: 22px;
     text-align: center;
 }
 
 .donateContent img {
     width: 50%;
-    padding: var(--spacing);
+    padding-bottom: var(--spacing);
 }
 
 .donateContent a {
