@@ -303,6 +303,10 @@ nav a:hover {
     margin-left: var(--spacing);
     position: absolute;
     bottom: -66px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .profileHeaderContainer .userImageContainer img {
@@ -354,4 +358,19 @@ nav a:hover {
 .donateContent a {
     color: lightblue;
     text-decoration: underline;
+}
+
+.profilePictureButton {
+    position: absolute;
+    font-size: 50px;
+    color: rgba(0,0,0,0.6);
+    display: none;
+}
+
+.userImageContainer:hover .profilePictureButton {
+    display: block;
+}
+
+#imageUploadModal {
+    color: black;
 }

@@ -13,6 +13,11 @@ block content
 
                 .userImageContainer 
                     img(src="/images/" + profilePic, alt="User profile image")
+
+                    if profileUser === userLoggedIn.username
+                        button.profilePictureButton(data-toggle="modal", data-target="#imageUploadModal")
+                            i.fas.fa-camera
+
             .userDetailsContainer 
                 span.displayName #{profileUser}
             
@@ -24,6 +29,8 @@ block content
             +createTab("Liked Comments", `/profile/${profileUser}/likedPosts`, selectedTab == "likedPosts")
 
         .postsContainer
+
+        +createImageUploadModal()
 
 block scripts
     script(src="/js/profile.js")
