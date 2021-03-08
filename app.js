@@ -28,10 +28,12 @@ const logoutRoute = require('./routes/logout');
 const urlRoute = require('./routes/urlRoutes');
 const profileRoute = require('./routes/profileRoutes');
 const donateRoute = require('./routes/donateRoutes');
+const uploadRoute = require('./routes/uploadRoutes');
 
 // Api routes
 const urlsApiRoute = require('./routes/api/urls');
 const postsApiRoute = require('./routes/api/posts');
+const usersApiRoute = require('./routes/api/users');
 
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
@@ -39,9 +41,11 @@ app.use("/logout", logoutRoute);
 app.use("/urls", urlRoute);
 app.use("/profile", middleware.requireLogin, profileRoute);
 app.use("/donate", donateRoute);
+app.use("/upload", uploadRoute);
 
 app.use("/api/urls", urlsApiRoute);
 app.use("/api/posts", postsApiRoute);
+app.use("/api/users", usersApiRoute);
 
 app.get("/", middleware.requireLogin, (req, res, next) => {
 
