@@ -374,3 +374,9 @@ nav a:hover {
 #imageUploadModal {
     color: black;
 }
+
+#imagePreview {
+    width: 100%;
+    display: block;
+    max-width: 100%;
+}
