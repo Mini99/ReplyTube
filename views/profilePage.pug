@@ -12,7 +12,7 @@ block content
             .coverPhotoContainer
 
                 .userImageContainer 
-                    img(src="/images/" + profilePic, alt="User profile image")
+                    img(src=profilePic, alt="User profile image")
 
                     if profileUser === userLoggedIn.username
                         button.profilePictureButton(data-toggle="modal", data-target="#imageUploadModal")

@@ -41,7 +41,7 @@ app.use("/logout", logoutRoute);
 app.use("/urls", urlRoute);
 app.use("/profile", middleware.requireLogin, profileRoute);
 app.use("/donate", donateRoute);
-app.use("/upload", uploadRoute);
+app.use("/uploads", uploadRoute);
 
 app.use("/api/urls", urlsApiRoute);
 app.use("/api/posts", postsApiRoute);

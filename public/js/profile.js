@@ -33,7 +33,7 @@ function createCommentHtml(postData) {
     return `<div class='post' data-id=${postData.postId} onclick="window.location.href='/urls/${postData.urlId}'" style='cursor: pointer'>
                 <div class='mainPostContentContainer'>
                     <div class='postImageContainer'>
-                        <img src='/images/${postData.profilePic}'>
+                        <img src='${postData.profilePic}'>
                     </div>
                     <div class='postContentContainer'>
                         <div class='header'>
