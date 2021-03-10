@@ -7,7 +7,7 @@ block content
 
             p.errorMessage #{errorMessage}
 
-            input(type="text", name="username", placeholder="Username", value=username, required="")
+            input#username(type="text", name="username", placeholder="Username", value=username, required="")
             input(type="email", name="email", placeholder="Email", value=email, required="")
             input#password(type="password", name="password", placeholder="Password", required="")
             input#passwordConf(type="password", name="passwordConf", placeholder="Confirm Password", required="")
@@ -16,6 +16,7 @@ block content
         a(href="/login") Already have an account? Login here.
 
     script.
+        var usernameField = document.getElementById("username")
         var passwordField = document.getElementById("password")
         var passwordConfirmField = document.getElementById("passwordConf")
         var form = document.getElementById("registerForm")
@@ -23,6 +24,9 @@ block content
         function validateForm() {
             if(passwordField.value != passwordConfirmField.value) {
                 alert("Passwords do not match. Please try again.")
+            }
+            else if (usernameField.value.length > 30){
+                alert("Username must be less than 30 characters long.")
             }
             else {
                 form.submit();
