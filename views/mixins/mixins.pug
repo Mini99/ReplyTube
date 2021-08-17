@@ -38,3 +38,9 @@ mixin createImageUploadModal()
                 .modal-footer 
                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel 
                     button#imageUploadButton.btn.btn-primary(type='button') Save
+
+mixin searchVideo()
+    .searchContainer
+        input#query(autocomplete='off' placeholder='Search Video Title')
+        input#submitQuery(type='submit' onclick='searchVids()' value='Search')
+        input#showAllVids(type='submit' onclick='showAllVids()' value='Clear')

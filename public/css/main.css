@@ -388,3 +388,11 @@ nav a:hover {
     display: block;
     max-width: 100%;
 }
+
+.searchContainer {
+    margin-top: var(--spacing);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
