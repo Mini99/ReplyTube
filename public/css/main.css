@@ -396,3 +396,8 @@ nav a:hover {
     justify-content: center;
     align-items: center;
 }
+
+.videoNotFound {
+    text-align: center;
+    padding: var(--spacing);
+}

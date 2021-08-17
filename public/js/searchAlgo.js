@@ -15,7 +15,7 @@ function searchVids() {
             }
             else {
                 $(".urlsContainer").html("");
-                var html = `<div class='userNotFound'>
+                var html = `<div class='videoNotFound'>
                             <span>Video not found</span>
                         </div>`;
                 $(".urlsContainer").prepend(html);
