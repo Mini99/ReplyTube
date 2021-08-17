@@ -169,4 +169,16 @@ router.put("/:id/like", async (req, res, next) => {
     
 })
 
+router.delete("/delete/:id", async (req, res, next) => {
+    var sql = "DELETE FROM posts WHERE postId=?";
+    con.query(sql, req.params.id, function(err, result, field){
+        try {
+            res.status(200).send(result);
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
 module.exports = router;

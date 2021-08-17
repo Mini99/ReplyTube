@@ -98,7 +98,19 @@ $(document).on("click", ".likeButton", (event) => {
             
         }
     })
-    
+})
+
+$(document).on("click", ".trashActive", (event) => {
+    var button = $(event.target);
+    var postId = getPostIdFromElement(button);
+
+    if(postId === undefined) return;
+
+    $.ajax({
+        url: `/api/posts/delete/${postId}`,
+        type: "DELETE",
+        success: () => location.reload()
+    })
 })
 
 function getPostIdFromElement(element) {
@@ -114,12 +126,20 @@ function getPostIdFromElement(element) {
 function createCommentHtml(postData) {   
 
     var likeButtonActiveClass;
+    var trashActiveClass;
 
     if(postData.active === "1"){
         likeButtonActiveClass = "active";
     }
     else {
         likeButtonActiveClass = "";
+    }
+
+    if(userLoggedIn.username !== postData.postedBy) {
+        trashActiveClass = "trashNotActive";
+    }
+    else {
+        trashActiveClass = "trashActive";
     }
     
     return `<div class='post' data-id=${postData.postId}>
@@ -139,6 +159,10 @@ function createCommentHtml(postData) {
                                 <button class='likeButton ${likeButtonActiveClass}'>
                                 <i class="far fa-thumbs-up"></i>
                                 <span>${postData.likes || ""}</span>
+                                </button>
+
+                                <button class='${trashActiveClass}'>
+                                <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
                         </div>

@@ -291,6 +291,10 @@ nav a:hover {
     color: var(--green);
 }
 
+.postButtonContainer .trashNotActive {
+    display: none;
+}
+
 .errorMessage {
     padding: var(--spacing);
 }
