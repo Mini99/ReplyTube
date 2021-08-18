@@ -4,13 +4,7 @@ const router = express.Router();
 const bodyParser = require("body-parser")
 const bcrypt = require('bcrypt');
 const mysql = require('mysql')
-
-const con = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_DATABASE
-});
+const pool = require('../database');
 
 router.get("/", (req, res, next) => {
 
@@ -28,7 +22,7 @@ router.get("/", (req, res, next) => {
 router.get("/:username", async (req, res, next) => {
 
     var sql = "SELECT * FROM users WHERE username=?";
-    con.query(sql, req.params.username, function(err, result, field){
+    pool.query(sql, req.params.username, function(err, result, field){
         try {
             if(result.length > 0) {
                 var payload = {
@@ -58,7 +52,7 @@ router.get("/:username", async (req, res, next) => {
 router.get("/:username/likedPosts", async (req, res, next) => {
 
     var sql = "SELECT * FROM users WHERE username=?";
-    con.query(sql, req.params.username, function(err, result, field){
+    pool.query(sql, req.params.username, function(err, result, field){
         try {
             if(result.length > 0) {
                 var payload = {

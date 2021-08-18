@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const mysql = require('mysql')
 const bcrypt = require('bcrypt');
 const path = require('path')
+const pool = require('../database');
 
 app.set('view-engine', 'pug')
 app.set("views", "views");
@@ -29,14 +30,8 @@ router.post("/", (req, res, next) => {
     var payload = req.body;
 
     if(req.body.logUsername && req.body.logPassword) {
-        const con = mysql.createConnection({
-            host: process.env.DB_HOST,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASS,
-            database: process.env.DB_DATABASE
-        });
 
-        con.query("SELECT * FROM users WHERE username='"+ req.body.logUsername +"' OR email='"+ req.body.logUsername +"'", async function(err, result, field){
+        pool.query("SELECT * FROM users WHERE username='"+ req.body.logUsername +"' OR email='"+ req.body.logUsername +"'", async function(err, result, field){
             if(result.length > 0){
                 var comp = await bcrypt.compare(req.body.logPassword, result[0].password);
                 if(comp === true) {

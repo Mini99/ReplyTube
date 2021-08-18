@@ -3,18 +3,12 @@ const app = express();
 const router = express.Router();
 const bodyParser = require("body-parser")
 const mysql = require('mysql')
+const pool = require('../../database');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const con = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_DATABASE
-});
-
 router.get("/", (req, res, next) => {
-    con.query("SELECT * FROM urls", function(err, result, field){
+    pool.query("SELECT * FROM urls", function(err, result, field){
         try {
             res.status(200).send(result);
         }
@@ -22,18 +16,6 @@ router.get("/", (req, res, next) => {
             console.log(err);
         }
     });
-})
-
-//possibly unused code
-router.get("/:username", (req, res, next) => {
-    // con.query("SELECT DISTINCT * FROM urls INNER JOIN posts ON urls.urlId=posts.urlId INNER JOIN likes ON posts.postId=likes.post WHERE user='"+ req.params.username +"'", function(err, result, field){
-    //     try {
-    //         res.status(200).send(result);
-    //     }
-    //     catch {
-    //         console.log(err);
-    //     }
-    // });
 })
 
 router.post("/", async (req, res, next) => {
@@ -48,10 +30,10 @@ router.post("/", async (req, res, next) => {
         urlPic: req.body.thumbnail
     }
 
-    con.query("SELECT * FROM urls WHERE urlId='"+ urlData.urlId +"'", function(err, result, field){
+    pool.query("SELECT * FROM urls WHERE urlId='"+ urlData.urlId +"'", function(err, result, field){
         try {
             if(result.length === 0) {
-                con.query("INSERT INTO urls (urlId, urlPic) VALUES ('"+ urlData.urlId +"', '"+ urlData.urlPic +"')", function(err, result, field){
+                pool.query("INSERT INTO urls (urlId, urlPic) VALUES ('"+ urlData.urlId +"', '"+ urlData.urlPic +"')", function(err, result, field){
                     try {
                         res.status(200).send(result);
                     }

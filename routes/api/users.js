@@ -7,15 +7,9 @@ const fs = require("fs");
 const multer = require("multer");
 const path = require('path');
 const upload = multer({ dest: "uploads/" });
+const pool = require('../../database');
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
-const con = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_DATABASE
-});
 
 router.post("/profilePicture", upload.single("croppedImage"), (req, res, next) => {
 
@@ -34,9 +28,9 @@ router.post("/profilePicture", upload.single("croppedImage"), (req, res, next) =
             return res.sendStatus(400);
         }
 
-        con.query("UPDATE posts SET profilePic=? WHERE postedBy=?", [filePath, req.session.user.username]);
+        pool.query("UPDATE posts SET profilePic=? WHERE postedBy=?", [filePath, req.session.user.username]);
         var sqlUsers = "UPDATE users SET profilePic=? WHERE username=?";
-        con.query(sqlUsers, [filePath, req.session.user.username], function(err, result, field){
+        pool.query(sqlUsers, [filePath, req.session.user.username], function(err, result, field){
             try {
                 req.session.user.profilePic = filePath;
                 res.sendStatus(204);

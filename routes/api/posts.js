@@ -3,15 +3,9 @@ const app = express();
 const router = express.Router();
 const bodyParser = require("body-parser")
 const mysql = require('mysql')
+const pool = require('../../database');
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
-const con = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_DATABASE
-});
 
 router.get("/", (req, res, next) => {
     res.status(200).send(req.session.user.username);
@@ -19,7 +13,7 @@ router.get("/", (req, res, next) => {
 
 router.get("/:id", (req, res, next) => {
     var sql = "SELECT * FROM posts WHERE urlId=?";
-    con.query(sql, req.params.id, function(err, result, field){
+    pool.query(sql, req.params.id, function(err, result, field){
         try {
             res.status(200).send(result);
         }
@@ -31,7 +25,7 @@ router.get("/:id", (req, res, next) => {
 
 router.get("/:id/user", (req, res, next) => {
     var sql = "SELECT * FROM posts WHERE postedBy=?";
-    con.query(sql, req.params.id, function(err, result, field){
+    pool.query(sql, req.params.id, function(err, result, field){
         try {
             res.status(200).send(result);
         }
@@ -43,7 +37,7 @@ router.get("/:id/user", (req, res, next) => {
 
 router.get("/:id/likedPosts", (req, res, next) => {
     var sql = "SELECT * FROM posts INNER JOIN likes ON posts.postId=likes.post WHERE user=?";
-    con.query(sql, req.params.id, function(err, result, field){
+    pool.query(sql, req.params.id, function(err, result, field){
         try {
             if(result.length > 0) {
                 res.status(200).send(result);
@@ -57,7 +51,7 @@ router.get("/:id/likedPosts", (req, res, next) => {
 
 router.get("/:id/checkLikes", (req, res, next) => {
     var sql = "SELECT * FROM likes WHERE user=? and post=?";
-    con.query(sql, [req.session.user.username, req.params.id], function(err, result, field){
+    pool.query(sql, [req.session.user.username, req.params.id], function(err, result, field){
         try {
             if(result.length > 0) {
                 res.status(200).send("1");
@@ -82,10 +76,10 @@ router.post("/:content/:urlId/comment", async (req, res, next) => {
     }
 
     var sqlInsertPost = "INSERT INTO posts (content, postedBy, urlId, profilePic) VALUES (?,?,?,?)";
-    con.query(sqlInsertPost, [postData.content, postData.postedBy, postData.urlId, postData.profilePic]);
+    pool.query(sqlInsertPost, [postData.content, postData.postedBy, postData.urlId, postData.profilePic]);
 
     var sqlSelectPost = "SELECT * FROM posts WHERE content=? AND postedBy=? AND urlID=? AND profilePic=?"
-    con.query(sqlSelectPost, [postData.content, postData.postedBy, postData.urlId, postData.profilePic], function(err, result, field){
+    pool.query(sqlSelectPost, [postData.content, postData.postedBy, postData.urlId, postData.profilePic], function(err, result, field){
         try {
             res.status(200).send(result[0]);
         }
@@ -127,18 +121,18 @@ router.put("/:id/like", async (req, res, next) => {
     var userId = req.session.user.username;
 
     var sql = "SELECT * FROM likes WHERE user=? AND post=?";
-    con.query(sql, [userId, postId], function(err, result, field){
+    pool.query(sql, [userId, postId], function(err, result, field){
         try {     
             // Case where post is liked by user       
             if(result.length > 0) {
                 sqlDeleteUserLikes = "DELETE FROM likes WHERE user=? AND post=?"
-                con.query(sqlDeleteUserLikes, [userId, postId]);
+                pool.query(sqlDeleteUserLikes, [userId, postId]);
 
                 var sqlUpdateLikes = "UPDATE posts SET likes=likes-1 WHERE postId=?"
-                con.query(sqlUpdateLikes, postId);
+                pool.query(sqlUpdateLikes, postId);
 
                 var sqlSelectLikes = "SELECT likes FROM posts WHERE postId=?"
-                con.query(sqlSelectLikes, postId, function(err, result, field){
+                pool.query(sqlSelectLikes, postId, function(err, result, field){
                     if(result[0].likes === 0){
                         result[0].likes = "";
                     }
@@ -149,13 +143,13 @@ router.put("/:id/like", async (req, res, next) => {
             // Case where post is not liked by user
             else {
                 sqlUserLikes = "INSERT INTO likes (user, post) VALUES (?,?)";
-                con.query(sqlUserLikes, [userId, postId]);
+                pool.query(sqlUserLikes, [userId, postId]);
 
                 var sqlUpdateLikes = "UPDATE posts SET likes=likes+1 WHERE postId=?"
-                con.query(sqlUpdateLikes, postId);
+                pool.query(sqlUpdateLikes, postId);
 
                 var sqlSelectLikes = "SELECT likes FROM posts WHERE postId=?"
-                con.query(sqlSelectLikes, postId, function(err, result, field){
+                pool.query(sqlSelectLikes, postId, function(err, result, field){
                     result[0].active = 0;
                     res.status(200).send(result[0]);
                 });
@@ -171,7 +165,7 @@ router.put("/:id/like", async (req, res, next) => {
 
 router.delete("/delete/:id", async (req, res, next) => {
     var sql = "DELETE FROM posts WHERE postId=?";
-    con.query(sql, req.params.id, function(err, result, field){
+    pool.query(sql, req.params.id, function(err, result, field){
         try {
             res.status(200).send(result);
         }

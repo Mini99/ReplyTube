@@ -5,6 +5,7 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const mysql = require('mysql')
 const bcrypt = require('bcrypt');
+const pool = require('../database');
 
 app.set('view-engine', 'pug')
 app.set("views", "views");
@@ -32,26 +33,19 @@ router.post("/", async (req, res, next) => {
     var payload = req.body;
 
     if(email && password) {
-        const con = mysql.createConnection({
-            host: process.env.DB_HOST,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASS,
-            database: process.env.DB_DATABASE
-        });
-
         var data = req.body;
 
         data.password = await bcrypt.hash(password, 10)
 
         var firstSql = "SELECT * FROM users WHERE username=? OR email=?";
 
-        con.query(firstSql, [username, email], function(err, result, field){
+        pool.query(firstSql, [username, email], function(err, result, field){
             if(err){
                 console.log(err);
             }
             else if(result.length === 0){
                 var secondSql = "INSERT INTO users (username, email, password, profilePic) VALUES (?,?,?,?)";
-                con.query(secondSql, [username, email, data.password, user.profilePic], function (err, result) {
+                pool.query(secondSql, [username, email, data.password, user.profilePic], function (err, result) {
                     if (err) throw err;
                     console.log("1 record inserted");
                     req.session.user = user;
