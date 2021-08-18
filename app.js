@@ -30,6 +30,7 @@ const profileRoute = require('./routes/profileRoutes');
 const donateRoute = require('./routes/donateRoutes');
 const uploadRoute = require('./routes/uploadRoutes');
 const searchRoute = require('./routes/searchRoutes');
+const channelsRoutes = require('./routes/channelsRoutes');
 
 // Api routes
 const urlsApiRoute = require('./routes/api/urls');
@@ -45,6 +46,7 @@ app.use("/profile", middleware.requireLogin, profileRoute);
 app.use("/donate", donateRoute);
 app.use("/uploads", uploadRoute);
 app.use("/search", searchRoute);
+app.use("/channels", channelsRoutes);
 
 app.use("/api/urls", urlsApiRoute);
 app.use("/api/posts", postsApiRoute);
