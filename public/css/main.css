@@ -401,3 +401,15 @@ nav a:hover {
     text-align: center;
     padding: var(--spacing);
 }
+
+.videoLikeContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.videoLikeContainer button {
+    padding: 0 50px;
+    font-size: 25px;
+}
+
