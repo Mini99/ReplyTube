@@ -11,7 +11,6 @@ $(document).ready(() => {
 
     $.get("/api/urls/likes/" + urlId, results => {
         outputLikes(results)
-        console.log(results);
     })
 })
 
