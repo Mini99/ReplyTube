@@ -8,6 +8,11 @@ $(document).ready(() => {
     $.get("/api/posts/", results => {
         var currUser = results;
     })
+
+    $.get("/api/urls/likes/" + urlId, results => {
+        outputLikes(results)
+        console.log(results);
+    })
 })
 
 $("#commentTextarea").keyup(event => {
@@ -181,5 +186,9 @@ function outputPosts(results, container) {
         })
         
     });
+}
+
+function outputLikes(results) {
+    document.getElementById("videoLikes").innerHTML = results[0].likes;
 }
 

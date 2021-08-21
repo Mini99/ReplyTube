@@ -52,4 +52,15 @@ router.post("/", async (req, res, next) => {
     
 })
 
+router.get("/likes/:id", (req, res, next) => {
+    pool.query("SELECT likes FROM urls WHERE urlId='"+ req.params.id +"'", function(err, result, field){
+        try {
+            res.status(200).send(result);
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
 module.exports = router;

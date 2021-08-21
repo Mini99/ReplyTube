@@ -409,7 +409,15 @@ nav a:hover {
 }
 
 .videoLikeContainer button {
-    padding: 0 50px;
+    padding: 0 18px;
     font-size: 25px;
+}
+
+.videoLikeContainer .green:hover {
+    color: var(--green);
+}
+
+.videoLikeContainer #videoLikes {
+    margin: 0 0 0 5px;
 }
 
