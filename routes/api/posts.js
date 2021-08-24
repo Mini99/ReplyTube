@@ -115,24 +115,31 @@ router.post("/:content/:urlId/comment", async (req, res, next) => {
 //     });
 // })
 
+const con = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DATABASE
+});
+
 router.put("/:id/like", async (req, res, next) => {
 
     var postId = req.params.id;
     var userId = req.session.user.username;
 
     var sql = "SELECT * FROM likes WHERE user=? AND post=?";
-    pool.query(sql, [userId, postId], function(err, result, field){
+    con.query(sql, [userId, postId], function(err, result, field){
         try {     
             // Case where post is liked by user       
             if(result.length > 0) {
                 sqlDeleteUserLikes = "DELETE FROM likes WHERE user=? AND post=?"
-                pool.query(sqlDeleteUserLikes, [userId, postId]);
+                con.query(sqlDeleteUserLikes, [userId, postId]);
 
                 var sqlUpdateLikes = "UPDATE posts SET likes=likes-1 WHERE postId=?"
-                pool.query(sqlUpdateLikes, postId);
+                con.query(sqlUpdateLikes, postId);
 
                 var sqlSelectLikes = "SELECT likes FROM posts WHERE postId=?"
-                pool.query(sqlSelectLikes, postId, function(err, result, field){
+                con.query(sqlSelectLikes, postId, function(err, result, field){
                     if(result[0].likes === 0){
                         result[0].likes = "";
                     }
@@ -143,13 +150,13 @@ router.put("/:id/like", async (req, res, next) => {
             // Case where post is not liked by user
             else {
                 sqlUserLikes = "INSERT INTO likes (user, post) VALUES (?,?)";
-                pool.query(sqlUserLikes, [userId, postId]);
+                con.query(sqlUserLikes, [userId, postId]);
 
                 var sqlUpdateLikes = "UPDATE posts SET likes=likes+1 WHERE postId=?"
-                pool.query(sqlUpdateLikes, postId);
+                con.query(sqlUpdateLikes, postId);
 
                 var sqlSelectLikes = "SELECT likes FROM posts WHERE postId=?"
-                pool.query(sqlSelectLikes, postId, function(err, result, field){
+                con.query(sqlSelectLikes, postId, function(err, result, field){
                     result[0].active = 0;
                     res.status(200).send(result[0]);
                 });
