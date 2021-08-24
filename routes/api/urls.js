@@ -112,4 +112,21 @@ router.put("/:id/like", (req, res, next) => {
     });
 })
 
+router.get("/:id/checkLikes", (req, res, next) => {
+    var urlId = req.params.id;
+    var userId = req.session.user.username;
+
+    var sql = "SELECT * FROM videoLikes WHERE user=? AND urlId=?";
+    pool.query(sql, [userId, urlId], function(err, result, field){
+        try {
+            if(result.length > 0) {
+                res.status(200).send(result);
+            }
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
 module.exports = router;

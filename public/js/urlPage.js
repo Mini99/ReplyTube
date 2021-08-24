@@ -210,5 +210,11 @@ function outputPosts(results, container) {
 
 function outputLikes(results) {
     document.getElementById("videoLikes").innerHTML = results[0].likes;
+
+    $.get("/api/urls/" + urlId + "/checkLikes", results => {
+        if(results) {
+            document.getElementById('videoLikeButton').className += ' active'
+        }
+    })
 }
 
