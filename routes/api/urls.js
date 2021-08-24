@@ -63,4 +63,53 @@ router.get("/likes/:id", (req, res, next) => {
     });
 })
 
+const con = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DATABASE
+});
+
+router.put("/:id/like", (req, res, next) => {
+    var urlId = req.params.id;
+    var userId = req.session.user.username;
+
+    var sql = "SELECT * FROM videoLikes WHERE user=? AND urlId=?";
+    con.query(sql, [userId, urlId], function(err, result, field){
+        try {     
+            // Case where video is liked by user       
+            if(result.length > 0) {
+                sqlDeleteUserLikes = "DELETE FROM videoLikes WHERE user=? AND urlId=?"
+                con.query(sqlDeleteUserLikes, [userId, urlId]);
+
+                var sqlUpdateLikes = "UPDATE urls SET likes=likes-1 WHERE urlId=?"
+                con.query(sqlUpdateLikes, urlId);
+
+                var sqlSelectLikes = "SELECT likes FROM urls WHERE urlId=?"
+                con.query(sqlSelectLikes, urlId, function(err, result, field){
+                    result[0].active = 1;
+                    res.status(200).send(result[0]);
+                });
+            }
+            // Case where video is not liked by user
+            else {
+                sqlUserLikes = "INSERT INTO videoLikes (user, urlId) VALUES (?,?)";
+                con.query(sqlUserLikes, [userId, urlId]);
+
+                var sqlUpdateLikes = "UPDATE urls SET likes=likes+1 WHERE urlId=?"
+                con.query(sqlUpdateLikes, urlId);
+
+                var sqlSelectLikes = "SELECT likes FROM urls WHERE urlId=?"
+                con.query(sqlSelectLikes, urlId, function(err, result, field){
+                    result[0].active = 0;
+                    res.status(200).send(result[0]);
+                });
+            }
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
 module.exports = router;

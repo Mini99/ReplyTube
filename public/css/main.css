@@ -421,3 +421,7 @@ nav a:hover {
     margin: 0 0 0 5px;
 }
 
+.videoLikeContainer .active {
+    color: var(--green);
+}
+

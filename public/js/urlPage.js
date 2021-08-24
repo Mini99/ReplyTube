@@ -117,6 +117,27 @@ $(document).on("click", ".trashActive", (event) => {
     })
 })
 
+$(document).on("click", ".videoLikeButton", (event) => {
+    var button = $(event.target);
+
+    $.ajax({
+        url: `/api/urls/${urlId}/like`,
+        type: "PUT",
+        success: (videoData) => {
+            
+            button.find("span").text(videoData.likes);
+
+            if(videoData.active === 0){
+                button.addClass("active");
+            }
+            else {
+                button.removeClass("active");
+            }
+            
+        }
+    })
+})
+
 function getPostIdFromElement(element) {
     var isRoot = element.hasClass("post");
     var rootElement = isRoot == true ? element : element.closest(".post");
