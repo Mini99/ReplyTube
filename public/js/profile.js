@@ -1,8 +1,11 @@
 $(document).ready(() => {
-    if(selectedTab === "likedPosts") {
+    if(selectedTab === "likedVideos") {
+        loadLikedVideos();
+    }
+    else if(selectedTab === "likedPosts") {
         loadLikedPosts();
     }
-    else {
+    else if(selectedTab === "posts") {
         loadPosts();
     }
 });
@@ -17,6 +20,43 @@ function loadLikedPosts() {
     $.get("/api/posts/" + profileUser + '/likedPosts', results => {
         outputPosts(results, $(".postsContainer"))
     })
+}
+
+function loadLikedVideos() {
+    $.get("/api/posts/" + profileUser + '/likedVideos', results => {
+        outputUrls(results, $(".postsContainer"))
+    })
+}
+
+function createPostHtml(urlData) {    
+
+    var thumbnailPic = urlData.urlPic;
+
+    return `<div class='url' data-id=${urlData.urlId}>
+                <div class='mainContentContainer'>
+                    <div class='urlImageContainer'>
+                        <img src='${thumbnailPic}'>
+                    </div>
+                    <div class='urlContentContainer'>
+                        <div class='header'>
+                        </div>
+                        <div class='urlBody'>
+                            <span>${urlData.urlId}</span>
+                        </div>
+                        <div class='urlFooter'>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+}
+
+function outputUrls(results, container) {
+    container.html("");
+
+    results.forEach(result => {
+        var html = createPostHtml(result)
+        container.prepend(html);
+    });
 }
 
 function createCommentHtml(postData) {   

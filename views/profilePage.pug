@@ -23,10 +23,11 @@ block content
             
         .tabsContainer 
             if profileUser === userLoggedIn.username
-                +createTab("Your Comments", `/profile/${profileUser}`, selectedTab != "likedPosts")
+                +createTab("Your Comments", `/profile/${profileUser}`, selectedTab == "posts")
             else
-                +createTab("Comments", `/profile/${profileUser}`, selectedTab != "likedPosts")
+                +createTab("Comments", `/profile/${profileUser}`, selectedTab == "posts")
             +createTab("Liked Comments", `/profile/${profileUser}/likedPosts`, selectedTab == "likedPosts")
+            +createTab("Liked Videos", `/profile/${profileUser}/likedVideos`, selectedTab == "likedVideos")
 
         .postsContainer
 
