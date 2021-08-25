@@ -15,4 +15,15 @@ router.get("/", (req, res, next) => {
     res.status(200).render("channels", payload);
 })
 
+router.get("/:id", (req, res, next) => {
+
+    var payload = {
+        pageTitle: "Channels",
+        userLoggedInJs: JSON.stringify(req.session.user.username),
+        urlId: req.params.id
+    }
+
+    res.status(200).render("channels", payload);
+})
+
 module.exports = router;

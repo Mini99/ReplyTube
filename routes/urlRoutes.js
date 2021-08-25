@@ -10,7 +10,8 @@ router.get("/:id", (req, res, next) => {
         pageTitle: "Watch",
         userLoggedIn: req.session.user,
         userLoggedInJs: JSON.stringify(req.session.user),
-        urlId: req.params.id
+        urlId: req.params.id,
+        endpoint: "/channels/" + req.params.id
     }
 
     res.status(200).render("urlPage", payload);

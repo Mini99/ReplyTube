@@ -425,3 +425,14 @@ nav a:hover {
     color: var(--green);
 }
 
+.channelName {
+    padding: var(--spacing);
+}
+
+.channelName:hover{
+    text-decoration: underline;
+}
+
+.channelContainer {
+    padding: var(--spacing);
+}
