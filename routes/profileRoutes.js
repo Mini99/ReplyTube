@@ -30,8 +30,7 @@ router.get("/:username", async (req, res, next) => {
                     userLoggedIn: req.session.user,
                     userLoggedInJs: JSON.stringify(req.session.user),
                     profileUser: req.params.username,
-                    profilePic: result[0].profilePic,
-                    selectedTab: "posts"
+                    profilePic: result[0].profilePic
                 }
                 res.status(200).render("profilePage", payload);
             }

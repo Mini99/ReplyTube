@@ -5,7 +5,7 @@ $(document).ready(() => {
     else if(selectedTab === "likedPosts") {
         loadLikedPosts();
     }
-    else if(selectedTab === "posts") {
+    else {
         loadPosts();
     }
 });
