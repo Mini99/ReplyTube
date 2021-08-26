@@ -9,7 +9,7 @@ var end = 19;
 
 $(window).scroll(function() {
     $.get("/api/urls/countVids", results => {
-        if(end < results.countVids) {
+        if(end <= results.countVids) {
             if($(window).scrollTop() == $(document).height() - $(window).height()) {
                 document.getElementById("loadWheel").style.display = "block";
                 setTimeout(() => { 
