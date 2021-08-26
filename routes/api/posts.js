@@ -80,6 +80,13 @@ router.get("/:id/checkLikes", (req, res, next) => {
     });
 })
 
+const con = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DATABASE
+});
+
 router.post("/:content/:urlId/comment", async (req, res, next) => {
 
     var postData = {
@@ -89,11 +96,11 @@ router.post("/:content/:urlId/comment", async (req, res, next) => {
         profilePic: req.session.user.profilePic
     }
 
-    var sqlInsertPost = "INSERT INTO posts (content, postedBy, urlId, profilePic) VALUES (?,?,?,?)";
-    pool.query(sqlInsertPost, [postData.content, postData.postedBy, postData.urlId, postData.profilePic]);
+    var sqlInsertPost = "INSERT INTO posts (content, postedBy, urlId, profilePic, likes) VALUES (?,?,?,?, 0)";
+    con.query(sqlInsertPost, [postData.content, postData.postedBy, postData.urlId, postData.profilePic]);
 
     var sqlSelectPost = "SELECT * FROM posts WHERE content=? AND postedBy=? AND urlID=? AND profilePic=?"
-    pool.query(sqlSelectPost, [postData.content, postData.postedBy, postData.urlId, postData.profilePic], function(err, result, field){
+    con.query(sqlSelectPost, [postData.content, postData.postedBy, postData.urlId, postData.profilePic], function(err, result, field){
         try {
             res.status(200).send(result[0]);
         }
@@ -129,13 +136,6 @@ router.post("/:content/:urlId/comment", async (req, res, next) => {
 //     });
 // })
 
-const con = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_DATABASE
-});
-
 router.put("/:id/like", async (req, res, next) => {
 
     var postId = req.params.id;
@@ -163,7 +163,7 @@ router.put("/:id/like", async (req, res, next) => {
             }
             // Case where post is not liked by user
             else {
-                sqlUserLikes = "INSERT INTO likes (user, post) VALUES (?,?)";
+                sqlUserLikes = "INSERT INTO likes (user, post, active) VALUES (?,?, 0)";
                 con.query(sqlUserLikes, [userId, postId]);
 
                 var sqlUpdateLikes = "UPDATE posts SET likes=likes+1 WHERE postId=?"
