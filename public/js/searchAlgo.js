@@ -11,7 +11,7 @@ function searchVids() {
     if(name != "") {
         $.get("/api/searches/" + name, results => {
             if(results.length > 0) {
-                outputUsers(results, $(".urlsContainer"))
+                outputUrls(results, $(".urlsContainer"))
             }
             else {
                 $(".urlsContainer").html("");
@@ -24,7 +24,7 @@ function searchVids() {
     }
     else {
         $.get("/api/searches", results => {
-            outputUsers(results, $(".urlsContainer"))
+            outputUrls(results, $(".urlsContainer"))
         })
     }
 }
@@ -32,11 +32,11 @@ function searchVids() {
 function showAllVids() {
     document.getElementById("query").value = '';
     $.get("/api/searches", results => {
-        outputUsers(results, $(".urlsContainer"))
+        outputUrls(results, $(".urlsContainer"))
     })
 }
 
-function outputUsers(results, container) {
+function outputUrls(results, container) {
     container.html("");
 
     results.forEach(result => {
