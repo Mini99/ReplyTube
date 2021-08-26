@@ -128,3 +128,12 @@ function outputUrls(results, container) {
         container.prepend(html);
     });
 }
+
+function outputUrlsHome(results, container) {
+    container.html("");
+
+    results.forEach(result => {
+        var html = createPostHtml(result)
+        container.append(html);
+    });
+}

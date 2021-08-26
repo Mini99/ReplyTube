@@ -18,6 +18,28 @@ router.get("/", (req, res, next) => {
     });
 })
 
+router.get("/countVids", (req, res, next) => {
+    pool.query("SELECT COUNT (*) AS countVids FROM urls", function(err, result, field){
+        try {
+            res.status(200).send(result[0]);
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
+router.get("/range/:start/:end", (req, res, next) => {
+    pool.query("SELECT * FROM urls ORDER BY id DESC LIMIT " + req.params.start + ", " + req.params.end, function(err, result, field){
+        try {
+            res.status(200).send(result);
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
 router.post("/", async (req, res, next) => {
 
     if(!req.body.content) {
@@ -33,7 +55,7 @@ router.post("/", async (req, res, next) => {
     pool.query("SELECT * FROM urls WHERE urlId='"+ urlData.urlId +"'", function(err, result, field){
         try {
             if(result.length === 0) {
-                pool.query("INSERT INTO urls (urlId, urlPic) VALUES ('"+ urlData.urlId +"', '"+ urlData.urlPic +"')", function(err, result, field){
+                pool.query("INSERT INTO urls (urlId, urlPic, likes) VALUES ('"+ urlData.urlId +"', '"+ urlData.urlPic +"', 0)", function(err, result, field){
                     try {
                         res.status(200).send(result);
                     }
@@ -93,7 +115,7 @@ router.put("/:id/like", (req, res, next) => {
             }
             // Case where video is not liked by user
             else {
-                sqlUserLikes = "INSERT INTO videoLikes (user, urlId) VALUES (?,?)";
+                sqlUserLikes = "INSERT INTO videoLikes (user, urlId, active) VALUES (?,?, 0)";
                 con.query(sqlUserLikes, [userId, urlId]);
 
                 var sqlUpdateLikes = "UPDATE urls SET likes=likes+1 WHERE urlId=?"
