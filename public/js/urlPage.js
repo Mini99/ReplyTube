@@ -71,13 +71,36 @@ $("#submitPostButton").click(() => {
             button.prop("disabled", true);
         }
     })
+})
 
-    // $.post("/api/posts", data, (postData, status, xhr) => {
-    //     var html = createCommentHtml(postData);
-    //     $(".commentsContainer").prepend(html);
-    //     textbox.val("");
-    //     button.prop("disabled", true);
-    // })
+$(document).on("click", ".submitReply", (event) => {
+    event.preventDefault();
+    var button = $(event.target);
+    var postId = getPostIdFromElement(button);
+
+    if(postId === undefined) return;
+
+    var replyContent = document.getElementById("replyTextarea" + postId).value;
+    var strippedString = replyContent.replace(/(<([^>]+)>)/gi, "");
+    var newString = escapeHtml(strippedString);
+
+    $.ajax({
+        url: `/api/urls/reply`,
+        type: "POST",
+        data: {
+            postId: postId,
+            content: newString,
+            postedBy: userLoggedIn.username,
+            urlId: urlId,
+            profilePic: userLoggedIn.profilePic,
+            likes: 0
+        },
+        success: (replyData) => {
+            document.getElementById("postId" + postId).style.display = "none";
+            document.getElementById("replyTextarea" + postId).value = "";
+            console.log(replyData);
+        }
+    })
 })
 
 $(document).on("click", ".likeButton", (event) => {
@@ -147,16 +170,6 @@ $(document).on("click", ".replyButton", (event) => {
     if(postId === undefined) return;
 
     document.getElementById("postId" + postId).style.display = "block";
-})
-
-$(document).on("click", ".submitReply", (event) => {
-    event.preventDefault();
-    var button = $(event.target);
-    var postId = getPostIdFromElement(button);
-
-    if(postId === undefined) return;
-
-    console.log(postId);
 })
 
 $(document).on("click", ".cancelReply", (event) => {
@@ -230,17 +243,17 @@ function createCommentHtml(postData) {
                 </div>
                 <div class='replyDisplay' id='postId${postData.postId}'>
                     <div class='mainReplyContentContainer'>
-                        <div class='userImageContainer'>
-                             <img src=${userLoggedIn.profilePic} alt="User's profile picture">
-                        </div>
                         <form>
-                            <textarea placeholder='Reply'></textarea>
+                            <textarea id='replyTextarea${postData.postId}' placeholder='Reply'></textarea>
                             <div class='replyBtn'>
                                 <input class='submitReply' type='submit' value='Reply'>
                                 <button class='cancelReply' id='cancelReply'>Cancel</button>
                             </div>
                         </form>
                     </div>
+                </div>
+                <div class='allReplies'>
+
                 </div>
             </div>`;
 
@@ -279,3 +292,5 @@ function outputLikes(results) {
         }
     })
 }
+
+

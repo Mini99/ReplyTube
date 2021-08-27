@@ -151,4 +151,31 @@ router.get("/:id/checkLikes", (req, res, next) => {
     });
 })
 
+router.post("/reply", (req, res, next) => {
+    postId = req.body.postId;
+    content = req.body.content;
+    postedBy = req.body.postedBy;
+    urlId = req.body.urlId;
+    profilePic = req.body.profilePic;
+    likes = req.body.likes;
+
+    var sql = "INSERT INTO replies (postId, content, postedBy, urlId, profilePic, likes) VALUES (?, ?, ?, ?, ?, ?)";
+    pool.query(sql, [postId, content, postedBy, urlId, profilePic, likes], function(err, result, field){
+        try {
+            var replyData = {
+                postId: postId,
+                content: content,
+                postedBy: postedBy,
+                urlId: urlId,
+                profilePic: profilePic,
+                likes: likes
+            }
+            res.status(200).send(replyData);
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
 module.exports = router;
