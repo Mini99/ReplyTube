@@ -138,6 +138,15 @@ $(document).on("click", ".videoLikeButton", (event) => {
     })
 })
 
+$(document).on("click", ".replyButton", (event) => {
+    var button = $(event.target);
+    var postId = getPostIdFromElement(button);
+
+    if(postId === undefined) return;
+
+    document.getElementById("postId" + postId).style.display = "block";
+})
+
 function getPostIdFromElement(element) {
     var isRoot = element.hasClass("post");
     var rootElement = isRoot == true ? element : element.closest(".post");
@@ -186,10 +195,27 @@ function createCommentHtml(postData) {
                                 <span>${postData.likes || ""}</span>
                                 </button>
 
+                                <button class='replyButton'>
+                                <i class="fas fa-reply"></i>
+                                </button>
+
                                 <button class='${trashActiveClass}'>
                                 <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='mainReplyContentContainer' id='postId${postData.postId}'>
+                    <div class='replyFormContainer'>
+                        <div class='userImageContainer'>
+                            <img src=${userLoggedIn.profilePic} alt="User's profile picture">
+                        </div>
+                        <div class='replyTextareaContainer'>
+                            <textarea id='replyTextarea' placeholder="Comment"></textarea>
+                        </div>
+                        <div class='replyButtonsContainer'>
+                            <button id='submitReplyButton' disabled>Post</button>
                         </div>
                     </div>
                 </div>
@@ -216,5 +242,9 @@ function outputLikes(results) {
             document.getElementById('videoLikeButton').className += ' active'
         }
     })
+}
+
+function showReplies(postId) {
+    document.getElementById("postID" + postId).style.display = "block";
 }
 

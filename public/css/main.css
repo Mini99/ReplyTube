@@ -442,3 +442,43 @@ nav a:hover {
     padding: var(--spacing);
     display: none;
 }
+
+.mainReplyContentContainer {
+    display: none;
+}
+
+.replyFormContainer {
+    display: flex;
+    padding: var(--spacing);
+    flex-shrink: 0;
+}
+
+.replyTextareaContainer {
+    flex: 1;
+    padding-left: var(--spacing);
+}
+
+.replyTextareaContainer textarea {
+    width: 100%;
+    border: none;
+    resize: none;
+    font-size: 19px;
+    background-color: rgb(23,23,23);
+    border: 1px solid rgb(230, 236, 240);
+    border-radius: 10px;
+    caret-color: white;
+    color: white;
+    padding: calc(var(--spacing) + 5px) 0 0 var(--spacing);
+}
+
+#submitReplyButton {
+    background-color: var(--green);
+    border: none;
+    border-radius: 10px;
+    padding: 7px 15px;
+    color: black;
+}
+
+#submitReplyButton:disabled {
+    background-color: var(--buttonHoverBg);
+}
