@@ -182,6 +182,14 @@ $(document).on("click", ".cancelReply", (event) => {
     document.getElementById("postId" + postId).style.display = "none";
 })
 
+$(document).on("click", "#showReplies", (event) => {
+    var button = $(event.target);
+    var postId = getPostIdFromElement(button);
+    $.get("/api/urls/replies/" + urlId + "/" + postId, results => {
+        outputReplies(results, $(".allReplies" + postId));
+    })
+})
+
 function getPostIdFromElement(element) {
     var isRoot = element.hasClass("post");
     var rootElement = isRoot == true ? element : element.closest(".post");
@@ -237,6 +245,8 @@ function createCommentHtml(postData) {
                                 <button class='${trashActiveClass}'>
                                 <i class="far fa-trash-alt"></i>
                                 </button>
+
+                                <button id='showReplies'>Show Replies</button>
                             </div>
                         </div>
                     </div>
@@ -252,9 +262,7 @@ function createCommentHtml(postData) {
                         </form>
                     </div>
                 </div>
-                <div class='allReplies'>
-
-                </div>
+                <div class='allReplies${postData.postId}'></div>
             </div>`;
 
             //mainReplyContentContainer
@@ -269,6 +277,11 @@ function createCommentHtml(postData) {
             //                 <button id='submitReplyButton' disabled>Post</button>
             //             </div>
             //         </div>
+}
+
+function createReplyHtml(replyData) {   
+    
+    return `<div class='reply' data-id=${replyData.replyId}><span>${replyData.content}</span></div>`;
 }
 
 function outputPosts(results, container) {
@@ -291,6 +304,14 @@ function outputLikes(results) {
             document.getElementById('videoLikeButton').className += ' active'
         }
     })
+}
+
+function outputReplies(results, container) {
+    container.html("");
+    results.forEach(result => {
+        var html = createReplyHtml(result)
+        container.prepend(html);        
+    });
 }
 
 
