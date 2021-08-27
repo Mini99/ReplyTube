@@ -443,42 +443,51 @@ nav a:hover {
     display: none;
 }
 
-.mainReplyContentContainer {
+.replyDisplay {
     display: none;
+    
 }
 
-.replyFormContainer {
+.mainReplyContentContainer {
     display: flex;
-    padding: var(--spacing);
-    flex-shrink: 0;
-}
-
-.replyTextareaContainer {
+    justify-content: center;
+    align-items: center;
     flex: 1;
     padding-left: var(--spacing);
 }
 
-.replyTextareaContainer textarea {
+.mainReplyContentContainer form {
+    padding-left: var(--spacing);
+}
+
+.mainReplyContentContainer textarea {
+    height: 30px;
     width: 100%;
     border: none;
+    border-bottom: 2px solid #aaa;
+    background-color: transparent;
+    margin-bottom: 10px;
     resize: none;
-    font-size: 19px;
-    background-color: rgb(23,23,23);
-    border: 1px solid rgb(230, 236, 240);
-    border-radius: 10px;
+    outline: none;
     caret-color: white;
     color: white;
-    padding: calc(var(--spacing) + 5px) 0 0 var(--spacing);
 }
 
-#submitReplyButton {
-    background-color: var(--green);
+.mainReplyContentContainer input[type="submit"], .mainReplyContentContainer button {
+    padding: 10px 15px;
     border: none;
-    border-radius: 10px;
-    padding: 7px 15px;
-    color: black;
+    outline: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-#submitReplyButton:disabled {
-    background-color: var(--buttonHoverBg);
+.mainReplyContentContainer input[type="submit"] {
+    background-color: var(--green);
+}
+
+.mainReplyContentContainer button {
+    color: rgb(145, 145, 145);
+    background-color: transparent;
 }

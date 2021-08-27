@@ -149,6 +149,26 @@ $(document).on("click", ".replyButton", (event) => {
     document.getElementById("postId" + postId).style.display = "block";
 })
 
+$(document).on("click", ".submitReply", (event) => {
+    event.preventDefault();
+    var button = $(event.target);
+    var postId = getPostIdFromElement(button);
+
+    if(postId === undefined) return;
+
+    console.log(postId);
+})
+
+$(document).on("click", ".cancelReply", (event) => {
+    event.preventDefault();
+    var button = $(event.target);
+    var postId = getPostIdFromElement(button);
+
+    if(postId === undefined) return;
+
+    document.getElementById("postId" + postId).style.display = "none";
+})
+
 function getPostIdFromElement(element) {
     var isRoot = element.hasClass("post");
     var rootElement = isRoot == true ? element : element.closest(".post");
@@ -208,20 +228,34 @@ function createCommentHtml(postData) {
                         </div>
                     </div>
                 </div>
-                <div class='mainReplyContentContainer' id='postId${postData.postId}'>
-                    <div class='replyFormContainer'>
+                <div class='replyDisplay' id='postId${postData.postId}'>
+                    <div class='mainReplyContentContainer'>
                         <div class='userImageContainer'>
-                            <img src=${userLoggedIn.profilePic} alt="User's profile picture">
+                             <img src=${userLoggedIn.profilePic} alt="User's profile picture">
                         </div>
-                        <div class='replyTextareaContainer'>
-                            <textarea id='replyTextarea' placeholder="Comment"></textarea>
-                        </div>
-                        <div class='replyButtonsContainer'>
-                            <button id='submitReplyButton' disabled>Post</button>
-                        </div>
+                        <form>
+                            <textarea placeholder='Reply'></textarea>
+                            <div class='replyBtn'>
+                                <input class='submitReply' type='submit' value='Reply'>
+                                <button class='cancelReply' id='cancelReply'>Cancel</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>`;
+
+            //mainReplyContentContainer
+            // <div class='replyFormContainer'>
+            //             <div class='userImageContainer'>
+            //                 <img src=${userLoggedIn.profilePic} alt="User's profile picture">
+            //             </div>
+            //             <div class='replyTextareaContainer'>
+            //                 <textarea id='replyTextarea' placeholder="Comment"></textarea>
+            //             </div>
+            //             <div class='replyButtonsContainer'>
+            //                 <button id='submitReplyButton' disabled>Post</button>
+            //             </div>
+            //         </div>
 }
 
 function outputPosts(results, container) {
@@ -245,8 +279,3 @@ function outputLikes(results) {
         }
     })
 }
-
-function showReplies(postId) {
-    document.getElementById("postID" + postId).style.display = "block";
-}
-
