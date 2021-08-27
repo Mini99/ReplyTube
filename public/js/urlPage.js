@@ -113,7 +113,9 @@ $(document).on("click", ".trashActive", (event) => {
     $.ajax({
         url: `/api/posts/delete/${postId}`,
         type: "DELETE",
-        success: () => location.reload()
+        success: () => {
+            document.body.querySelector(`.post[data-id='${postId}']`).style.display = "none";
+        }
     })
 })
 
