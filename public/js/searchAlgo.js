@@ -23,16 +23,16 @@ function searchVids() {
         })
     }
     else {
-        $.get("/api/searches", results => {
-            outputUrls(results, $(".urlsContainer"))
+        $.get("/api/urls/range/0/9", results => {
+            outputUrlsHome(results, $(".urlsContainer"))
         })
     }
 }
 
 function showAllVids() {
     document.getElementById("query").value = '';
-    $.get("/api/searches", results => {
-        outputUrls(results, $(".urlsContainer"))
+    $.get("/api/urls/range/0/9", results => {
+        outputUrlsHome(results, $(".urlsContainer"))
     })
 }
 
