@@ -497,3 +497,8 @@ nav a:hover {
 #commentsContainer {
     display: none;
 }
+
+#replySpinner {
+    text-align: center;
+    padding: var(--spacing);
+}
