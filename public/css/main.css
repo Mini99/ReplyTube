@@ -291,7 +291,7 @@ nav a:hover {
     color: var(--green);
 }
 
-.postButtonContainer .trashNotActive {
+.postButtonContainer .trashNotActive, .replyTrashNotActive {
     display: none;
 }
 

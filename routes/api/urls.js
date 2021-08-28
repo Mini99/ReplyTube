@@ -211,4 +211,28 @@ router.get("/checkReplies/:urlId", (req, res, next) => {
     });
 })
 
+router.delete("/deleteReply/:id", async (req, res, next) => {
+    var sql = "DELETE FROM replies WHERE replyId=?";
+    pool.query(sql, req.params.id, function(err, result, field){
+        try {
+            res.status(200).send(result);
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
+router.get("/countReplies/:postId", async (req, res, next) => {
+    var sql = "SELECT COUNT (*) as countReplies FROM replies WHERE postId=?";
+    pool.query(sql, req.params.postId, function(err, result, field){
+        try {
+            res.status(200).send(result);
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
 module.exports = router;

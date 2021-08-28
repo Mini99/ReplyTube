@@ -110,7 +110,6 @@ $(document).on("click", ".submitReply", (event) => {
         success: (replyData) => {
             document.getElementById("postId" + postId).style.display = "none";
             document.getElementById("replyTextarea" + postId).value = "";
-            console.log(replyData);
         }
     })
 })
@@ -150,6 +149,35 @@ $(document).on("click", ".trashActive", (event) => {
         type: "DELETE",
         success: () => {
             document.body.querySelector(`.post[data-id='${postId}']`).style.display = "none";
+        }
+    })
+})
+
+$(document).on("click", ".replyTrashActive", (event) => {
+    var button = $(event.target);
+    var replyId = getReplyIdFromElement(button);
+    var postId = getPostIdFromElement(button);
+
+    if(replyId === undefined) return;
+
+    $.ajax({
+        url: `/api/urls/deleteReply/${replyId}`,
+        type: "DELETE",
+        success: () => {
+            document.body.querySelector(`.reply[data-id='${replyId}']`).style.display = "none";
+        }
+    })
+
+    $.ajax({
+        url: `/api/urls/countReplies/${postId}`,
+        type: "GET",
+        success: (countDatas) => {
+            countDatas.forEach(countData => {
+                if(countData.countReplies === 0) {
+                    document.getElementById("showReplies" + postId).style.display = "none";
+                    document.getElementById("hideReplies" + postId).style.display = "none";
+                }
+            });
         }
     })
 })
@@ -228,6 +256,16 @@ function getPostIdFromElement(element) {
     return postId;
 }
 
+function getReplyIdFromElement(element) {
+    var isRoot = element.hasClass("reply");
+    var rootElement = isRoot == true ? element : element.closest(".reply");
+    var postId = rootElement.data().id;
+
+    if(postId === undefined) return alert("Reply id undefinded");
+
+    return postId;
+}
+
 function createCommentHtml(postData) {   
 
     var likeButtonActiveClass;
@@ -296,6 +334,13 @@ function createCommentHtml(postData) {
 }
 
 function createReplyHtml(replyData) {   
+
+    if(userLoggedIn.username !== replyData.postedBy) {
+        trashActiveClass = "replyTrashNotActive";
+    }
+    else {
+        trashActiveClass = "replyTrashActive";
+    }
     
     return `<div class='reply' data-id=${replyData.replyId}>
                 <div class='mainPostContentContainer'>
@@ -316,7 +361,7 @@ function createReplyHtml(replyData) {
                                 <span>${replyData.likes || ""}</span>
                                 </button>
 
-                                <button>
+                                <button class='${trashActiveClass}'>
                                 <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
