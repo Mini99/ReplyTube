@@ -110,6 +110,13 @@ $(document).on("click", ".submitReply", (event) => {
         success: (replyData) => {
             document.getElementById("postId" + postId).style.display = "none";
             document.getElementById("replyTextarea" + postId).value = "";
+
+            document.getElementById("allReplies" + postId).style.display = "block";
+            $.get("/api/urls/replies/" + urlId + "/" + postId, results => {
+                outputReplies(results, $(".allReplies" + postId));
+            })
+            document.getElementById("showReplies" + postId).style.display = "none";
+            document.getElementById("hideReplies" + postId).style.display = "block";
         }
     })
 })
