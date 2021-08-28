@@ -297,7 +297,33 @@ function createCommentHtml(postData) {
 
 function createReplyHtml(replyData) {   
     
-    return `<div class='reply' data-id=${replyData.replyId}><span>${replyData.content}</span></div>`;
+    return `<div class='reply' data-id=${replyData.replyId}>
+                <div class='mainPostContentContainer'>
+                    <div class='postImageContainer'>
+                        <img src='${replyData.profilePic}'>
+                    </div>
+                    <div class='postContentContainer'>
+                        <div class='header'>
+                            <span class='username'><a href='/profile/${replyData.postedBy}'>${replyData.postedBy}</a></span>
+                        </div>
+                        <div class='postBody'>
+                            <span>${replyData.content}</span>
+                        </div>
+                        <div class='postFooter'>
+                            <div class='postButtonContainer green'>
+                                <button>
+                                <i class="far fa-thumbs-up"></i>
+                                <span>${replyData.likes || ""}</span>
+                                </button>
+
+                                <button>
+                                <i class="far fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
 }
 
 function outputPosts(results, container) {

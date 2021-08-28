@@ -506,3 +506,7 @@ nav a:hover {
 .hideReplies {
     display: none;
 }
+
+.reply {
+    margin: var(--spacing);
+}
