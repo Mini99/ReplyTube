@@ -489,3 +489,11 @@ nav a:hover {
     color: rgb(145, 145, 145);
     background-color: transparent;
 }
+
+.showReplies {
+    display: none;
+}
+
+#commentsContainer {
+    display: none;
+}

@@ -14,6 +14,18 @@ $(document).ready(() => {
     })
 })
 
+window.onload = function(){
+    document.getElementById("replySpinner").style.display = "none"
+    document.getElementById("commentsContainer").style.display = "block"
+    var urlId = window.location.href.slice(-11);
+    
+    $.get("/api/urls/checkReplies/" + urlId, results => {
+        results.forEach(result => {
+            document.getElementById("showReplies" + result.postId).style.display = "block";
+        });
+    })
+  };
+
 $("#commentTextarea").keyup(event => {
     var textbox = $(event.target);
     var value = textbox.val().trim();
@@ -182,7 +194,7 @@ $(document).on("click", ".cancelReply", (event) => {
     document.getElementById("postId" + postId).style.display = "none";
 })
 
-$(document).on("click", "#showReplies", (event) => {
+$(document).on("click", ".showReplies", (event) => {
     var button = $(event.target);
     var postId = getPostIdFromElement(button);
     $.get("/api/urls/replies/" + urlId + "/" + postId, results => {
@@ -246,7 +258,7 @@ function createCommentHtml(postData) {
                                 <i class="far fa-trash-alt"></i>
                                 </button>
 
-                                <button id='showReplies'>Show Replies</button>
+                                <button class='showReplies' id='showReplies${postData.postId}'>Show Replies</button>
                             </div>
                         </div>
                     </div>

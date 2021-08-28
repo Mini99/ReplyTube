@@ -24,7 +24,9 @@ block content
 
     +createCommentForm(userLoggedIn)
 
-    .commentsContainer
+    #replySpinner.spinner-border(role="status")
+        span.sr-only Loading...
+    .commentsContainer#commentsContainer
 
     //- +createPostForm(userLoggedIn)
 

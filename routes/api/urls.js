@@ -195,4 +195,20 @@ router.get("/replies/:urlId/:postId", (req, res, next) => {
     });
 })
 
+router.get("/checkReplies/:urlId", (req, res, next) => {
+    var urlId = req.params.urlId;
+
+    var sql = "SELECT postId FROM replies WHERE urlId=?";
+    pool.query(sql, urlId, function(err, result, field){
+        try {
+            if(result.length > 0) {
+                res.status(200).send(result);
+            }
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
 module.exports = router;
