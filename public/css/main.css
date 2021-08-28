@@ -502,3 +502,7 @@ nav a:hover {
     text-align: center;
     padding: var(--spacing);
 }
+
+.hideReplies {
+    display: none;
+}

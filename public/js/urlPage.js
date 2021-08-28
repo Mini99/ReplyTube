@@ -197,9 +197,25 @@ $(document).on("click", ".cancelReply", (event) => {
 $(document).on("click", ".showReplies", (event) => {
     var button = $(event.target);
     var postId = getPostIdFromElement(button);
+
+    document.getElementById("allReplies" + postId).style.display = "block";
+
+    document.getElementById("showReplies" + postId).style.display = "none";
+    document.getElementById("hideReplies" + postId).style.display = "block";
+
     $.get("/api/urls/replies/" + urlId + "/" + postId, results => {
         outputReplies(results, $(".allReplies" + postId));
     })
+})
+
+$(document).on("click", ".hideReplies", (event) => {
+    var button = $(event.target);
+    var postId = getPostIdFromElement(button);
+
+    document.getElementById("hideReplies" + postId).style.display = "none";
+    document.getElementById("showReplies" + postId).style.display = "block";
+
+    document.getElementById("allReplies" + postId).style.display = "none";
 })
 
 function getPostIdFromElement(element) {
@@ -259,6 +275,7 @@ function createCommentHtml(postData) {
                                 </button>
 
                                 <button class='showReplies' id='showReplies${postData.postId}'>Show Replies</button>
+                                <button class='hideReplies' id='hideReplies${postData.postId}'>Hide Replies</button>
                             </div>
                         </div>
                     </div>
@@ -274,21 +291,8 @@ function createCommentHtml(postData) {
                         </form>
                     </div>
                 </div>
-                <div class='allReplies${postData.postId}'></div>
+                <div class='allReplies${postData.postId}' id='allReplies${postData.postId}'></div>
             </div>`;
-
-            //mainReplyContentContainer
-            // <div class='replyFormContainer'>
-            //             <div class='userImageContainer'>
-            //                 <img src=${userLoggedIn.profilePic} alt="User's profile picture">
-            //             </div>
-            //             <div class='replyTextareaContainer'>
-            //                 <textarea id='replyTextarea' placeholder="Comment"></textarea>
-            //             </div>
-            //             <div class='replyButtonsContainer'>
-            //                 <button id='submitReplyButton' disabled>Post</button>
-            //             </div>
-            //         </div>
 }
 
 function createReplyHtml(replyData) {   
