@@ -145,6 +145,30 @@ $(document).on("click", ".likeButton", (event) => {
     })
 })
 
+$(document).on("click", ".replyLikeButton", (event) => {
+    var button = $(event.target);
+    var replyId = getReplyIdFromElement(button);
+
+    if(replyId === undefined) return;
+
+    $.ajax({
+        url: `/api/urls/${replyId}/replyLike`,
+        type: "PUT",
+        success: (replyData) => {
+            
+            button.find("span").text(replyData.likes);
+
+            if(replyData.active === 0){
+                button.addClass("active");
+            }
+            else {
+                button.removeClass("active");
+            }
+            
+        }
+    })
+})
+
 $(document).on("click", ".trashActive", (event) => {
     var button = $(event.target);
     var postId = getPostIdFromElement(button);
@@ -240,6 +264,14 @@ $(document).on("click", ".showReplies", (event) => {
 
     $.get("/api/urls/replies/" + urlId + "/" + postId, results => {
         outputReplies(results, $(".allReplies" + postId));
+
+        results.forEach(result => {
+            $.get("/api/urls/" + result.replyId + "/checkReplyLikes", replyResults => {
+                if(replyResults) {
+                    document.getElementById('replyLikeButton').className += ' active'
+                }
+            })
+        })
     })
 })
 
@@ -342,6 +374,16 @@ function createCommentHtml(postData) {
 
 function createReplyHtml(replyData) {   
 
+    var likeButtonActiveClass;
+    var trashActiveClass;
+
+    if(replyData.active === "1"){
+        likeButtonActiveClass = "active";
+    }
+    else {
+        likeButtonActiveClass = "";
+    }
+
     if(userLoggedIn.username !== replyData.postedBy) {
         trashActiveClass = "replyTrashNotActive";
     }
@@ -363,9 +405,9 @@ function createReplyHtml(replyData) {
                         </div>
                         <div class='postFooter'>
                             <div class='postButtonContainer green'>
-                                <button>
+                                <button id='replyLikeButton' class='replyLikeButton ${likeButtonActiveClass}'>
                                 <i class="far fa-thumbs-up"></i>
-                                <span>${replyData.likes || ""}</span>
+                                <span id='replyLikes'>${replyData.likes || ""}</span>
                                 </button>
 
                                 <button class='${trashActiveClass}'>

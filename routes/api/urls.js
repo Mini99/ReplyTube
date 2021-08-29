@@ -151,6 +151,23 @@ router.get("/:id/checkLikes", (req, res, next) => {
     });
 })
 
+router.get("/:replyId/checkReplyLikes", (req, res, next) => {
+    var replyId = req.params.replyId;
+    var userId = req.session.user.username;
+
+    var sql = "SELECT * FROM replyLikes WHERE user=? AND replyId=?";
+    pool.query(sql, [userId, replyId], function(err, result, field){
+        try {
+            if(result.length > 0) {
+                res.status(200).send(result);
+            }
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
 router.post("/reply", (req, res, next) => {
     postId = req.body.postId;
     content = req.body.content;
@@ -228,6 +245,49 @@ router.get("/countReplies/:postId", async (req, res, next) => {
     pool.query(sql, req.params.postId, function(err, result, field){
         try {
             res.status(200).send(result);
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
+router.put("/:replyId/replyLike", async (req, res, next) => {
+
+    var replyId = req.params.replyId;
+    var userId = req.session.user.username;
+
+    var sql = "SELECT * FROM replyLikes WHERE user=? AND replyId=?";
+    con.query(sql, [userId, replyId], function(err, result, field){
+        try {     
+            // Case where reply is liked by user       
+            if(result.length > 0) {
+                sqlDeleteUserLikes = "DELETE FROM replyLikes WHERE user=? AND replyId=?"
+                con.query(sqlDeleteUserLikes, [userId, replyId]);
+
+                var sqlUpdateLikes = "UPDATE replies SET likes=likes-1 WHERE replyId=?"
+                con.query(sqlUpdateLikes, replyId);
+
+                var sqlSelectLikes = "SELECT likes FROM replies WHERE replyId=?"
+                con.query(sqlSelectLikes, replyId, function(err, result, field){
+                    result[0].active = 1;
+                    res.status(200).send(result[0]);
+                });
+            }
+            // Case where reply is not liked by user
+            else {
+                sqlUserLikes = "INSERT INTO replyLikes (user, replyId, active) VALUES (?,?, 0)";
+                con.query(sqlUserLikes, [userId, replyId]);
+
+                var sqlUpdateLikes = "UPDATE replies SET likes=likes+1 WHERE replyId=?"
+                con.query(sqlUpdateLikes, replyId);
+
+                var sqlSelectLikes = "SELECT likes FROM replies WHERE replyId=?"
+                con.query(sqlSelectLikes, replyId, function(err, result, field){
+                    result[0].active = 0;
+                    res.status(200).send(result[0]);
+                });
+            }
         }
         catch {
             console.log(err);
