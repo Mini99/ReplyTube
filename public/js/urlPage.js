@@ -268,7 +268,7 @@ $(document).on("click", ".showReplies", (event) => {
         results.forEach(result => {
             $.get("/api/urls/" + result.replyId + "/checkReplyLikes", replyResults => {
                 if(replyResults) {
-                    document.getElementById('replyLikeButton').className += ' active'
+                    document.getElementById('replyLikeButton' + replyResults[0].replyId).className += ' active';
                 }
             })
         })
@@ -405,7 +405,7 @@ function createReplyHtml(replyData) {
                         </div>
                         <div class='postFooter'>
                             <div class='postButtonContainer green'>
-                                <button id='replyLikeButton' class='replyLikeButton ${likeButtonActiveClass}'>
+                                <button id='replyLikeButton${replyData.replyId}' class='replyLikeButton ${likeButtonActiveClass}'>
                                 <i class="far fa-thumbs-up"></i>
                                 <span id='replyLikes'>${replyData.likes || ""}</span>
                                 </button>
