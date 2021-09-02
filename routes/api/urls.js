@@ -228,7 +228,7 @@ router.get("/checkReplies/:urlId", (req, res, next) => {
     });
 })
 
-router.delete("/deleteReply/:id", async (req, res, next) => {
+router.delete("/deleteReply/:id/:postId", async (req, res, next) => {
     var sql = "SELECT * FROM replies INNER JOIN replyLikes ON replies.replyId=replyLikes.replyId AND replies.postedBy=replyLikes.user WHERE replies.replyId=?";
     pool.query(sql, req.params.id, function(err, result, field){
         try {
@@ -239,19 +239,11 @@ router.delete("/deleteReply/:id", async (req, res, next) => {
             else {
                 pool.query("DELETE FROM replies WHERE replyId=?", req.params.id);
             }
-            res.status(200).send(result);
-        }
-        catch {
-            console.log(err);
-        }
-    });
-})
 
-router.get("/countReplies/:postId", async (req, res, next) => {
-    var sql = "SELECT COUNT (*) as countReplies FROM replies WHERE postId=?";
-    pool.query(sql, req.params.postId, function(err, result, field){
-        try {
-            res.status(200).send(result);
+            var checkReplies = "SELECT COUNT (*) as countReplies FROM replies WHERE postId=?";
+            pool.query(checkReplies, req.params.postId, function(err, resultCount, field){
+                res.status(200).send(resultCount);
+            });
         }
         catch {
             console.log(err);

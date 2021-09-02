@@ -197,23 +197,15 @@ $(document).on("click", ".replyTrashActive", (event) => {
     if(replyId === undefined) return;
 
     $.ajax({
-        url: `/api/urls/deleteReply/${replyId}`,
+        url: `/api/urls/deleteReply/${replyId}/${postId}`,
         type: "DELETE",
-        success: () => {
+        success: (countReplies) => {
             document.body.querySelector(`.reply[data-id='${replyId}']`).style.display = "none";
-        }
-    })
 
-    $.ajax({
-        url: `/api/urls/countReplies/${postId}`,
-        type: "GET",
-        success: (countDatas) => {
-            countDatas.forEach(countData => {
-                if(countData.countReplies === 0) {
-                    document.getElementById("showReplies" + postId).style.display = "none";
-                    document.getElementById("hideReplies" + postId).style.display = "none";
-                }
-            });
+            if(countReplies[0].countReplies === 1) {
+                document.getElementById("showReplies" + postId).style.display = "none";
+                document.getElementById("hideReplies" + postId).style.display = "none";
+            }
         }
     })
 })
