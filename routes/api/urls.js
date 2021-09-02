@@ -229,9 +229,16 @@ router.get("/checkReplies/:urlId", (req, res, next) => {
 })
 
 router.delete("/deleteReply/:id", async (req, res, next) => {
-    var sql = "DELETE FROM replies WHERE replyId=?";
+    var sql = "SELECT * FROM replies INNER JOIN replyLikes ON replies.replyId=replyLikes.replyId AND replies.postedBy=replyLikes.user WHERE replies.replyId=?";
     pool.query(sql, req.params.id, function(err, result, field){
         try {
+            if(result.length > 0) {
+                pool.query("DELETE FROM replies WHERE replyId=?", req.params.id);
+                pool.query("DELETE FROM replyLikes WHERE replyId=?", req.params.id);
+            }
+            else {
+                pool.query("DELETE FROM replies WHERE replyId=?", req.params.id);
+            }
             res.status(200).send(result);
         }
         catch {
