@@ -111,9 +111,30 @@ $(document).on("click", ".submitReply", (event) => {
             document.getElementById("postId" + postId).style.display = "none";
             document.getElementById("replyTextarea" + postId).value = "";
 
+            // document.getElementById("allReplies" + postId).style.display = "block";
+            // $.get("/api/urls/replies/" + urlId + "/" + postId, results => {
+            //     outputReplies(results, $(".allReplies" + postId));
+            // })
+            // document.getElementById("showReplies" + postId).style.display = "none";
+            // document.getElementById("hideReplies" + postId).style.display = "block";
+
+
+
             document.getElementById("allReplies" + postId).style.display = "block";
+
+            document.getElementById("showReplies" + postId).style.display = "none";
+            document.getElementById("hideReplies" + postId).style.display = "block";
+
             $.get("/api/urls/replies/" + urlId + "/" + postId, results => {
                 outputReplies(results, $(".allReplies" + postId));
+
+                results.forEach(result => {
+                    $.get("/api/urls/" + result.replyId + "/checkReplyLikes", replyResults => {
+                        if(replyResults) {
+                            document.getElementById('replyLikeButton' + replyResults[0].replyId).className += ' active';
+                        }
+                    })
+                })
             })
             document.getElementById("showReplies" + postId).style.display = "none";
             document.getElementById("hideReplies" + postId).style.display = "block";
