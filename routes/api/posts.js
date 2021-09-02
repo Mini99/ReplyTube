@@ -185,9 +185,16 @@ router.put("/:id/like", async (req, res, next) => {
 })
 
 router.delete("/delete/:id", async (req, res, next) => {
-    var sql = "DELETE FROM posts WHERE postId=?";
+    var sql = "SELECT * FROM posts INNER JOIN likes ON posts.postId=likes.post AND posts.postedBy=likes.user WHERE posts.postId=?";
     pool.query(sql, req.params.id, function(err, result, field){
         try {
+            if(result.length > 0) {
+                pool.query("DELETE FROM posts WHERE postId=?", req.params.id);
+                pool.query("DELETE FROM likes WHERE post=?", req.params.id);
+            }
+            else {
+                pool.query("DELETE FROM posts WHERE postId=?", req.params.id);
+            }
             res.status(200).send(result);
         }
         catch {
