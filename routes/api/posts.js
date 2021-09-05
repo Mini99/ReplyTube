@@ -185,18 +185,18 @@ router.put("/:id/like", async (req, res, next) => {
 })
 
 router.delete("/delete/:id", async (req, res, next) => {
-    pool.query("DELETE replies, replylikes FROM replies INNER JOIN replylikes ON replies.replyId=replylikes.replyId WHERE replies.postId=?", req.params.id);
-    pool.query("DELETE FROM replies WHERE postId=?", req.params.id);
+    con.query("DELETE replies, replylikes FROM replies INNER JOIN replylikes ON replies.replyId=replylikes.replyId WHERE replies.postId=?", req.params.id);
+    con.query("DELETE FROM replies WHERE postId=?", req.params.id);
 
     var sql = "SELECT * FROM posts INNER JOIN likes ON posts.postId=likes.post AND posts.postedBy=likes.user WHERE posts.postId=?";
-    pool.query(sql, req.params.id, function(err, result, field){
+    con.query(sql, req.params.id, function(err, result, field){
         try {
             if(result.length > 0) {
-                pool.query("DELETE FROM posts WHERE postId=?", req.params.id);
-                pool.query("DELETE FROM likes WHERE post=?", req.params.id);
+                con.query("DELETE FROM posts WHERE postId=?", req.params.id);
+                con.query("DELETE FROM likes WHERE post=?", req.params.id);
             }
             else {
-                pool.query("DELETE FROM posts WHERE postId=?", req.params.id);
+                con.query("DELETE FROM posts WHERE postId=?", req.params.id);
             }
             res.status(200).send(result);
         }
