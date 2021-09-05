@@ -12,7 +12,7 @@ router.get("/", (req, res, next) => {
 })
 
 router.get("/:id", (req, res, next) => {
-    var sql = "SELECT * FROM posts WHERE urlId=? ORDER BY timestamp";
+    var sql = "SELECT * FROM posts WHERE urlId=? ORDER BY timestamp ASC";
     pool.query(sql, req.params.id, function(err, result, field){
         try {
             res.status(200).send(result);
@@ -24,7 +24,7 @@ router.get("/:id", (req, res, next) => {
 })
 
 router.get("/:id/user", (req, res, next) => {
-    var sql = "SELECT * FROM posts WHERE postedBy=? ORDER BY timestamp";
+    var sql = "SELECT * FROM posts WHERE postedBy=? ORDER BY timestamp ASC";
     pool.query(sql, req.params.id, function(err, result, field){
         try {
             res.status(200).send(result);
@@ -36,7 +36,7 @@ router.get("/:id/user", (req, res, next) => {
 })
 
 router.get("/:id/likedPosts", (req, res, next) => {
-    var sql = "SELECT * FROM posts INNER JOIN likes ON posts.postId=likes.post WHERE user=? ORDER BY timestamp";
+    var sql = "SELECT * FROM posts INNER JOIN likes ON posts.postId=likes.post WHERE user=? ORDER BY timestamp ASC";
     pool.query(sql, req.params.id, function(err, result, field){
         try {
             if(result.length > 0) {
