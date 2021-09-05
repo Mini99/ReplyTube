@@ -168,6 +168,10 @@ $(document).on("click", ".replyLikeButton", (event) => {
             }
             else {
                 button.removeClass("active");
+
+                if(replyData.likes === 0) {
+                    button.find("span").text("");
+                }
             }
             
         }
