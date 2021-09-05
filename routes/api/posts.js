@@ -185,14 +185,8 @@ router.put("/:id/like", async (req, res, next) => {
 })
 
 router.delete("/delete/:id", async (req, res, next) => {
-    pool.query("SELECT * FROM replies INNER JOIN posts ON replies.postId=posts.postId INNER JOIN replylikes ON replies.replyId=replylikes.replyId WHERE posts.postId=?", req.params.id, function(err, allRes, field){
-        if(allRes.length > 0) {
-            pool.query("DELETE replies, posts, replylikes FROM replies INNER JOIN posts ON replies.postId=posts.postId INNER JOIN replylikes ON replies.replyId=replylikes.replyId WHERE posts.postId=?", req.params.id);
-        }
-        else {
-            pool.query("DELETE FROM replies WHERE postId=?", req.params.id);
-        }
-    });
+    pool.query("DELETE replies, replylikes FROM replies INNER JOIN replylikes ON replies.replyId=replylikes.replyId WHERE replies.postId=?", req.params.id);
+    pool.query("DELETE FROM replies WHERE postId=?", req.params.id);
 
     var sql = "SELECT * FROM posts INNER JOIN likes ON posts.postId=likes.post AND posts.postedBy=likes.user WHERE posts.postId=?";
     pool.query(sql, req.params.id, function(err, result, field){
