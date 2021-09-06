@@ -20,7 +20,7 @@ a {
 }
 
 .wrapper {
-    padding: 0 15px 15px 15px;
+    padding: 0 15px 0 15px;
 }
 
 a:hover {
@@ -509,4 +509,10 @@ nav a:hover {
 
 .reply {
     margin: var(--spacing);
+}
+
+.copyrightFooter {
+    text-align: center;
+    color: gray;
+    padding: var(--spacing);
 }
