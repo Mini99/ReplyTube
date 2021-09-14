@@ -36,13 +36,13 @@ function loadLikedVideos() {
 
 function loadReplies() {
     $.get("/api/urls/" + profileUser + '/replies', results => {
-        outputPosts(results, $(".postsContainer"))
+        outputReplies(results, $(".postsContainer"))
     })
 }
 
 function loadLikedReplies() {
     $.get("/api/urls/" + profileUser + '/likedReplies', results => {
-        outputPosts(results, $(".postsContainer"))
+        outputReplies(results, $(".postsContainer"))
     })
 }
 
@@ -117,6 +117,18 @@ function outputPosts(results, container) {
     container.html("");
     results.forEach(result => {
         $.get("/api/posts/" + result.postId + "/checkLikes", results => {
+            result.active = results;
+            var html = createCommentHtml(result)
+            container.prepend(html);
+        })
+        
+    });
+}
+
+function outputReplies(results, container) {
+    container.html("");
+    results.forEach(result => {
+        $.get("/api/urls/" + result.replyId + "/checkReplyLikes/profile", results => {
             result.active = results;
             var html = createCommentHtml(result)
             container.prepend(html);
