@@ -314,7 +314,7 @@ router.put("/:replyId/replyLike", async (req, res, next) => {
 router.get("/:postedBy/replies", async (req, res, next) => {
     var postedBy = req.params.postedBy;
 
-    var sql = "SELECT * FROM replies WHERE postedBy=?";
+    var sql = "SELECT * FROM replies WHERE postedBy=? ORDER BY timestamp";
     con.query(sql, postedBy, function(err, result, field){
         try {     
             res.status(200).send(result);
@@ -328,7 +328,7 @@ router.get("/:postedBy/replies", async (req, res, next) => {
 router.get("/:postedBy/likedReplies", async (req, res, next) => {
     var postedBy = req.params.postedBy;
 
-    var sql = "SELECT * FROM replies INNER JOIN replyLikes ON replies.replyId=replyLikes.replyId WHERE postedBy=?";
+    var sql = "SELECT * FROM replies INNER JOIN replyLikes ON replies.replyId=replyLikes.replyId WHERE postedBy=? ORDER BY replies.timestamp";
     con.query(sql, postedBy, function(err, result, field){
         try {     
             res.status(200).send(result);
