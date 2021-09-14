@@ -125,7 +125,6 @@ router.get("/:username/likedReplies", async (req, res, next) => {
                     profilePic: result[0].profilePic,
                     selectedTab: "likedReplies"
                 }
-                console.log(payload.profilePic);
                 res.status(200).render("profilePage", payload);
             }
             else {
