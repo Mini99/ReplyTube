@@ -113,7 +113,7 @@ router.get("/:username/replies", async (req, res, next) => {
 
 router.get("/:username/likedReplies", async (req, res, next) => {
 
-    var sql = "SELECT * FROM replylikes WHERE user=?";
+    var sql = "SELECT * FROM replies INNER JOIN replylikes ON replies.replyId=replylikes.replyId WHERE replylikes.user=?";
     pool.query(sql, req.params.username, function(err, result, field){
         try {
             if(result.length > 0) {
@@ -125,6 +125,7 @@ router.get("/:username/likedReplies", async (req, res, next) => {
                     profilePic: result[0].profilePic,
                     selectedTab: "likedReplies"
                 }
+                console.log(payload.profilePic);
                 res.status(200).render("profilePage", payload);
             }
             else {
