@@ -516,3 +516,8 @@ nav a:hover {
     color: gray;
     padding: var(--spacing);
 }
+
+.copyrightFooter a:hover {
+    color: lightgray;
+    text-decoration: underline;
+}
