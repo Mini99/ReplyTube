@@ -5,6 +5,12 @@ $(document).ready(() => {
     else if(selectedTab === "likedPosts") {
         loadLikedPosts();
     }
+    else if(selectedTab === "replies") {
+        loadReplies();
+    }
+    else if(selectedTab === 'likedReplies') {
+        loadLikedReplies();
+    }
     else {
         loadPosts();
     }
@@ -25,6 +31,18 @@ function loadLikedPosts() {
 function loadLikedVideos() {
     $.get("/api/posts/" + profileUser + '/likedVideos', results => {
         outputUrls(results, $(".postsContainer"))
+    })
+}
+
+function loadReplies() {
+    $.get("/api/urls/" + profileUser + '/replies', results => {
+        outputPosts(results, $(".postsContainer"))
+    })
+}
+
+function loadLikedReplies() {
+    $.get("/api/urls/" + profileUser + '/likedReplies', results => {
+        outputPosts(results, $(".postsContainer"))
     })
 }
 

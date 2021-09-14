@@ -294,4 +294,32 @@ router.put("/:replyId/replyLike", async (req, res, next) => {
     });
 })
 
+router.get("/:postedBy/replies", async (req, res, next) => {
+    var postedBy = req.params.postedBy;
+
+    var sql = "SELECT * FROM replies WHERE postedBy=?";
+    con.query(sql, postedBy, function(err, result, field){
+        try {     
+            res.status(200).send(result);
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
+router.get("/:postedBy/likedReplies", async (req, res, next) => {
+    var postedBy = req.params.postedBy;
+
+    var sql = "SELECT * FROM replies INNER JOIN replyLikes ON replies.replyId=replyLikes.replyId WHERE postedBy=?";
+    con.query(sql, postedBy, function(err, result, field){
+        try {     
+            res.status(200).send(result);
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
 module.exports = router;

@@ -23,10 +23,15 @@ block content
             
         .tabsContainer 
             if profileUser === userLoggedIn.username
-                +createTab("Your Comments", `/profile/${profileUser}`, selectedTab != "likedPosts" && selectedTab != "likedVideos")
+                +createTab("Your Comments", `/profile/${profileUser}`, selectedTab != "likedPosts" && selectedTab != "likedVideos" && selectedTab != "replies" && selectedTab != "likedReplies")
             else
-                +createTab("Comments", `/profile/${profileUser}`, selectedTab != "likedPosts" || selectedTab != "likedVideos")
+                +createTab("Comments", `/profile/${profileUser}`, selectedTab != "likedPosts" && selectedTab != "likedVideos" && selectedTab != "replies" && selectedTab != "likedReplies")
             +createTab("Liked Comments", `/profile/${profileUser}/likedPosts`, selectedTab == "likedPosts")
+            if profileUser === userLoggedIn.username 
+                +createTab("Your Replies", `/profile/${profileUser}/replies`, selectedTab == "replies")
+            else 
+                +createTab("Replies", `/profile/${profileUser}/replies`, selectedTab == "replies")
+            +createTab("Liked Replies", `/profile/${profileUser}/likedReplies`, selectedTab == "likedReplies")
             +createTab("Liked Videos", `/profile/${profileUser}/likedVideos`, selectedTab == "likedVideos")
 
         .postsContainer
