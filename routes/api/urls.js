@@ -212,11 +212,11 @@ router.post("/reply", (req, res, next) => {
     });
 })
 
-router.get("/replies/:urlId/:postId", (req, res, next) => {
+router.get("/replies/:urlId/:postId/:start/:end", (req, res, next) => {
     var urlId = req.params.urlId;
     var postId = req.params.postId;
 
-    var sql = "SELECT * FROM replies WHERE urlId=? and postId=? ORDER BY timestamp ASC";
+    var sql = "SELECT * FROM replies WHERE urlId=? and postId=? ORDER BY timestamp ASC LIMIT " + req.params.start + ", " + req.params.end;
     pool.query(sql, [urlId, postId], function(err, result, field){
         try {
             if(result.length > 0) {
@@ -338,5 +338,20 @@ router.get("/:postedBy/likedReplies", async (req, res, next) => {
         }
     });
 })
+
+router.get("/countReplies/:postId", async (req, res, next) => {
+    var postId = req.params.postId;
+
+    var sql = "SELECT COUNT (*) AS countReplies FROM replies WHERE postId=?";
+    con.query(sql, postId, function(err, result, field){
+        try {     
+            res.status(200).send(result);
+        }
+        catch {
+            console.log(err);
+        }
+    });
+})
+
 
 module.exports = router;

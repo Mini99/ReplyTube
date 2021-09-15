@@ -86,6 +86,9 @@ $("#submitPostButton").click(() => {
 })
 
 $(document).on("click", ".submitReply", (event) => {
+    var start = 0;
+    var end = 5;
+
     event.preventDefault();
     var button = $(event.target);
     var postId = getPostIdFromElement(button);
@@ -112,7 +115,7 @@ $(document).on("click", ".submitReply", (event) => {
             document.getElementById("replyTextarea" + postId).value = "";
 
             document.getElementById("allReplies" + postId).style.display = "block";
-            $.get("/api/urls/replies/" + urlId + "/" + postId, results => {
+            $.get("/api/urls/replies/" + urlId + "/" + postId + "/" + start + "/" + end, results => {
                 outputReplies(results, $(".allReplies" + postId));
                 results.forEach(resultAll => {
                     if(resultAll.likes > 0) {
@@ -255,6 +258,9 @@ $(document).on("click", ".cancelReply", (event) => {
 })
 
 $(document).on("click", ".showReplies", (event) => {
+    var start = 0;
+    var end = 5;
+
     var button = $(event.target);
     var postId = getPostIdFromElement(button);
 
@@ -263,7 +269,17 @@ $(document).on("click", ".showReplies", (event) => {
     document.getElementById("showReplies" + postId).style.display = "none";
     document.getElementById("hideReplies" + postId).style.display = "block";
 
-    $.get("/api/urls/replies/" + urlId + "/" + postId, results => {
+    $.get("/api/urls/countReplies/" + postId, results => {
+
+        if(results[0].countReplies > end) {
+            document.getElementById("showMoreReplies" + postId).style.display = "block";
+        }
+        else {
+            document.getElementById("showMoreReplies" + postId).style.display = "none";
+        }
+    })
+
+    $.get("/api/urls/replies/" + urlId + "/" + postId + "/" + start + "/" + end, results => {
         outputReplies(results, $(".allReplies" + postId));
 
         results.forEach(result => {
@@ -282,6 +298,8 @@ $(document).on("click", ".hideReplies", (event) => {
 
     document.getElementById("hideReplies" + postId).style.display = "none";
     document.getElementById("showReplies" + postId).style.display = "block";
+
+    document.getElementById("showMoreReplies" + postId).style.display = "none";
 
     document.getElementById("allReplies" + postId).style.display = "none";
 })
@@ -370,6 +388,7 @@ function createCommentHtml(postData) {
                     </div>
                 </div>
                 <div class='allReplies${postData.postId}' id='allReplies${postData.postId}'></div>
+                <div><button class='showMoreReplies' id='showMoreReplies${postData.postId}'>Show More Replies</button></div>
             </div>`;
 }
 

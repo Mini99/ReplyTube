@@ -521,3 +521,7 @@ nav a:hover {
     color: lightgray;
     text-decoration: underline;
 }
+
+.showMoreReplies {
+    display: none;
+}
