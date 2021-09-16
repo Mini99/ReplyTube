@@ -115,7 +115,7 @@ $(document).on("click", ".submitReply", (event) => {
             document.getElementById("replyTextarea" + postId).value = "";
 
             document.getElementById("allReplies" + postId).style.display = "block";
-            $.get("/api/urls/replies/" + urlId + "/" + postId + "/" + start + "/" + end, results => {
+            $.get("/api/urls/replies/" + urlId + "/" + postId, results => {
                 outputReplies(results, $(".allReplies" + postId));
                 results.forEach(resultAll => {
                     if(resultAll.likes > 0) {
@@ -269,17 +269,17 @@ $(document).on("click", ".showReplies", (event) => {
     document.getElementById("showReplies" + postId).style.display = "none";
     document.getElementById("hideReplies" + postId).style.display = "block";
 
-    $.get("/api/urls/countReplies/" + postId, results => {
+    // $.get("/api/urls/countReplies/" + postId, results => {
 
-        if(results[0].countReplies > end) {
-            document.getElementById("showMoreReplies" + postId).style.display = "block";
-        }
-        else {
-            document.getElementById("showMoreReplies" + postId).style.display = "none";
-        }
-    })
+    //     if(results[0].countReplies > end) {
+    //         document.getElementById("showMoreReplies" + postId).style.display = "block";
+    //     }
+    //     else {
+    //         document.getElementById("showMoreReplies" + postId).style.display = "none";
+    //     }
+    // })
 
-    $.get("/api/urls/replies/" + urlId + "/" + postId + "/" + start + "/" + end, results => {
+    $.get("/api/urls/replies/" + urlId + "/" + postId, results => {
         outputReplies(results, $(".allReplies" + postId));
 
         results.forEach(result => {
