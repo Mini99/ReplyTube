@@ -212,23 +212,6 @@ router.post("/reply", (req, res, next) => {
     });
 })
 
-// router.get("/replies/:urlId/:postId/:start/:end", (req, res, next) => {
-//     var urlId = req.params.urlId;
-//     var postId = req.params.postId;
-
-//     var sql = "SELECT * FROM (SELECT * FROM replies WHERE urlId=? and postId=? ORDER BY timestamp DESC LIMIT" + req.params.end + ") g ORDER BY g.timestamp";
-//     pool.query(sql, [urlId, postId], function(err, result, field){
-//         try {
-//             if(result.length > 0) {
-//                 res.status(200).send(result);
-//             }
-//         }
-//         catch {
-//             console.log(err);
-//         }
-//     });
-// })
-
 router.get("/replies/:urlId/:postId", (req, res, next) => {
     var urlId = req.params.urlId;
     var postId = req.params.postId;
