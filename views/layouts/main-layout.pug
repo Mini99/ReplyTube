@@ -25,10 +25,11 @@ html(lang="en")
                         i.fab.fa-youtube
                     a(href="/donate")
                         i.fas.fa-donate
-                    a(href="/profile")
-                        i.fas.fa-user
-                    a(href="/logout")
-                        i.fas.fa-sign-out-alt
+                    if(userLoggedIn != "notLoggedIn")
+                        a(href="/profile")
+                            i.fas.fa-user
+                        a(href="/logout")
+                            i.fas.fa-sign-out-alt
                 .mainSectionContainer.col-10.col-md-8
                     .titleContainer
                         h1 #{pageTitle}
@@ -36,7 +37,8 @@ html(lang="en")
                     block content
 
                 .d-none.d-md-block.col-md-2
-                    span
+                    if(userLoggedIn == "notLoggedIn")
+                        a(href="/login")#loginBtn Login/Register
 
             .copyrightFooter 
                 span Copyright @ 2021 ReplyTube, LLC. All Rights Reserved.

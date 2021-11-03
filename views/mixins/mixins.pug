@@ -8,6 +8,14 @@ mixin createPostForm(userLoggedIn)
                 button#submitSearchButton Search
             h1#invalidUrl Invalid URL
 
+mixin createGuestPostForm(userLoggedIn)
+    .postFormContainer
+        .textareaContainer
+            textarea#postTextarea(placeholder="YouTube URL")
+            .buttonsContainer
+                button#submitSearchButton Search
+            h1#invalidUrl Invalid URL
+
 mixin createCommentForm(userLoggedIn)
     .commentFormContainer
         .userImageContainer

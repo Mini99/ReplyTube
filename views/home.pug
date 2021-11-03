@@ -5,7 +5,10 @@ block content
         h1 About
         p ReplyTube is a website designed to facilitate free and open conversations on YouTube Videos. With this web application, you will be able to submit any video and comment, along with anybody else who enjoys commincating on the Internet. Start by using the Search function to find the video of your choice, or glance below at the Community Posts to see what other people are watching. Enjoy!
         h1 Enter YouTube Video URL Here
-    +createPostForm(userLoggedIn)
+    if(userLoggedIn != "notLoggedIn")
+        +createPostForm(userLoggedIn)
+    else
+        +createGuestPostForm(userLoggedIn)
     .homeContent
         h1 Community Posts
     .urlsContainer

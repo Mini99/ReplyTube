@@ -53,13 +53,24 @@ app.use("/api/posts", postsApiRoute);
 app.use("/api/users", usersApiRoute);
 app.use("/api/searches", searchesRoute);
 
-app.get("/", middleware.requireLogin, (req, res, next) => {
+app.get("/", (req, res, next) => {
 
-    var payload = {
-        pageTitle: "ReplyTube",
-        userLoggedIn: req.session.user,
-        userLoggedInJs: JSON.stringify(req.session.user),
+    if(req.session && req.session.user) {
+        var payload = {
+            pageTitle: "ReplyTube",
+            userLoggedIn: req.session.user,
+            userLoggedInJs: JSON.stringify(req.session.user),
+        }
     }
+    else {
+        var payload = {
+            pageTitle: "ReplyTube",
+            userLoggedIn: "notLoggedIn",
+            userLoggedInJs: JSON.stringify("notLoggedIn"),
+        }
+    }
+
+    console.log(payload);
 
     res.status(200).render("home", payload);
 })
