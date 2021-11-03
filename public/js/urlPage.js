@@ -272,7 +272,7 @@ $(document).on("click", ".showReplies", (event) => {
         
             results.forEach(result => {
                 $.get("/api/urls/" + result.replyId + "/checkReplyLikes/", replyResults => {
-                    if(replyResults) {
+                    if(replyResults.length > 0) {
                         document.getElementById('replyLikeButton' + replyResults[0].replyId).className += ' active';
                     }
                 })

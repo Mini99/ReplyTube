@@ -12,7 +12,7 @@ router.get("/", (req, res, next) => {
         try {
             res.status(200).send(result);
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -23,7 +23,7 @@ router.get("/countVids", (req, res, next) => {
         try {
             res.status(200).send(result[0]);
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -34,7 +34,7 @@ router.get("/range/:start", (req, res, next) => {
         try {
             res.status(200).send(result);
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -59,13 +59,13 @@ router.post("/", async (req, res, next) => {
                     try {
                         res.status(200).send(result);
                     }
-                    catch {
+                    catch (err) {
                         console.log(err);
                     }
                 });
             }
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -79,7 +79,7 @@ router.get("/likes/:id", (req, res, next) => {
         try {
             res.status(200).send(result);
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -128,7 +128,7 @@ router.put("/:id/like", (req, res, next) => {
                 });
             }
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -145,7 +145,7 @@ router.get("/:id/checkLikes", (req, res, next) => {
                 res.status(200).send(result);
             }
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -155,14 +155,12 @@ router.get("/:replyId/checkReplyLikes", (req, res, next) => {
     var replyId = req.params.replyId;
     var userId = req.session.user.username;
 
-    var sql = "SELECT * FROM replyLikes WHERE user=? AND replyId=?";
+    var sql = "SELECT * FROM replylikes WHERE user=? AND replyId=?";
     pool.query(sql, [userId, replyId], function(err, result, field){
         try {
-            if(result.length > 0) {
-                res.status(200).send(result);
-            }
+            res.status(200).send(result);
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -179,7 +177,7 @@ router.get("/:id/checkReplyLikes/profile", (req, res, next) => {
                 res.status(200).send("0");
             }
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -206,7 +204,7 @@ router.post("/reply", (req, res, next) => {
             }
             res.status(200).send(replyData);
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -223,7 +221,7 @@ router.get("/replies/:urlId/:postId", (req, res, next) => {
                 res.status(200).send(result);
             }
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -239,7 +237,7 @@ router.get("/checkReplies/:urlId", (req, res, next) => {
                 res.status(200).send(result);
             }
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -262,7 +260,7 @@ router.delete("/deleteReply/:id/:postId", async (req, res, next) => {
                 res.status(200).send(resultCount);
             });
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -305,7 +303,7 @@ router.put("/:replyId/replyLike", async (req, res, next) => {
                 });
             }
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -319,7 +317,7 @@ router.get("/:postedBy/replies", async (req, res, next) => {
         try {     
             res.status(200).send(result);
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -333,7 +331,7 @@ router.get("/:postedBy/likedReplies", async (req, res, next) => {
         try {     
             res.status(200).send(result);
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
@@ -347,7 +345,7 @@ router.get("/countReplies/:postId", async (req, res, next) => {
         try {     
             res.status(200).send(result);
         }
-        catch {
+        catch (err) {
             console.log(err);
         }
     });
