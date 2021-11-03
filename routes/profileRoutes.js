@@ -82,7 +82,7 @@ router.get("/:username/likedPosts", async (req, res, next) => {
 
 router.get("/:username/replies", async (req, res, next) => {
 
-    var sql = "SELECT * FROM replies WHERE postedBy=?";
+    var sql = "SELECT * FROM users WHERE username=?";
     pool.query(sql, req.params.username, function(err, result, field){
         try {
             if(result.length > 0) {
@@ -113,7 +113,8 @@ router.get("/:username/replies", async (req, res, next) => {
 
 router.get("/:username/likedReplies", async (req, res, next) => {
 
-    var sql = "SELECT * FROM replies INNER JOIN replylikes ON replies.replyId=replylikes.replyId WHERE replylikes.user=?";
+    // var sql = "SELECT * FROM replies INNER JOIN replylikes ON replies.replyId=replylikes.replyId WHERE replylikes.user=?";
+    var sql = "SELECT * FROM users WHERE username=?";
     pool.query(sql, req.params.username, function(err, result, field){
         try {
             if(result.length > 0) {
