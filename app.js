@@ -41,12 +41,12 @@ const searchesRoute = require('./routes/api/searches');
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/logout", logoutRoute);
-app.use("/urls", urlRoute);
+app.use("/urls", middleware.requireLogin, urlRoute);
 app.use("/profile", middleware.requireLogin, profileRoute);
-app.use("/donate", donateRoute);
-app.use("/uploads", uploadRoute);
-app.use("/search", searchRoute);
-app.use("/channels", channelsRoutes);
+app.use("/donate", middleware.requireLogin, donateRoute);
+app.use("/uploads", middleware.requireLogin, uploadRoute);
+app.use("/search", middleware.requireLogin, searchRoute);
+app.use("/channels", middleware.requireLogin, channelsRoutes);
 
 app.use("/api/urls", urlsApiRoute);
 app.use("/api/posts", postsApiRoute);
