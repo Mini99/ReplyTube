@@ -23,7 +23,7 @@ function searchVids() {
         })
     }
     else {
-        $.get("/api/urls/range/0/9", results => {
+        $.get("/api/urls/range/0", results => {
             outputUrlsHome(results, $(".urlsContainer"))
         })
     }
@@ -31,7 +31,7 @@ function searchVids() {
 
 function showAllVids() {
     document.getElementById("query").value = '';
-    $.get("/api/urls/range/0/9", results => {
+    $.get("/api/urls/range/0", results => {
         outputUrlsHome(results, $(".urlsContainer"))
     })
 }
