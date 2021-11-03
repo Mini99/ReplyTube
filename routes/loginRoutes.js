@@ -36,6 +36,7 @@ router.post("/", (req, res, next) => {
                 var comp = await bcrypt.compare(req.body.logPassword, result[0].password);
                 if(comp === true) {
                     user.email = result[0].email;
+                    user.username = result[0].username;
                     user.profilePic = result[0].profilePic;
                     req.session.user = user;
                     return res.redirect("/");
