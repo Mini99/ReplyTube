@@ -4,6 +4,15 @@ header {
     font-size: 48px;
 }
 
+header a {
+    color: #01C8C8;
+}
+
+header a:hover {
+    color: #01C8C8;
+    text-decoration: none;
+}
+
 .loginHeader {
     text-decoration: none;
 }
