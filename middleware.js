@@ -6,3 +6,12 @@ exports.requireLogin = (req, res, next) => {
         return res.redirect('/login');
     }
 }
+
+exports.urlLogin = (req, res, next) => {
+    if (req.session && req.session.user) {
+        return next();
+    }
+    else {
+        return res.redirect('/guestUrl');
+    }
+}

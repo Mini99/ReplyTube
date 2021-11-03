@@ -26,6 +26,7 @@ const loginRoute = require('./routes/loginRoutes');
 const registerRoute = require('./routes/registerRoutes');
 const logoutRoute = require('./routes/logout');
 const urlRoute = require('./routes/urlRoutes');
+const guestUrlRoute = require('./routes/guestUrlPageRoutes');
 const profileRoute = require('./routes/profileRoutes');
 const donateRoute = require('./routes/donateRoutes');
 const uploadRoute = require('./routes/uploadRoutes');
@@ -41,7 +42,8 @@ const searchesRoute = require('./routes/api/searches');
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/logout", logoutRoute);
-app.use("/urls", middleware.requireLogin, urlRoute);
+app.use("/urls", middleware.urlLogin, urlRoute);
+app.use("/guestUrl", guestUrlRoute);
 app.use("/profile", middleware.requireLogin, profileRoute);
 app.use("/donate", middleware.requireLogin, donateRoute);
 app.use("/uploads", middleware.requireLogin, uploadRoute);
@@ -55,22 +57,21 @@ app.use("/api/searches", searchesRoute);
 
 app.get("/", (req, res, next) => {
 
+    var payload;
     if(req.session && req.session.user) {
-        var payload = {
+        payload = {
             pageTitle: "ReplyTube",
             userLoggedIn: req.session.user,
             userLoggedInJs: JSON.stringify(req.session.user),
         }
     }
     else {
-        var payload = {
+        payload = {
             pageTitle: "ReplyTube",
-            userLoggedIn: "notLoggedIn",
-            userLoggedInJs: JSON.stringify("notLoggedIn"),
+            userLoggedIn: "",
+            userLoggedInJs: JSON.stringify(""),
         }
     }
-
-    console.log(payload);
 
     res.status(200).render("home", payload);
 })

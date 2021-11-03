@@ -1,0 +1,21 @@
+extends layouts/main-layout.pug
+
+block content
+    script.
+        var urlId = '!{urlId}'
+    .urlsContainer
+
+    iframe(width=inherit, height="800", src='https://www.youtube.com/embed/' + urlId + "?autoplay=1&mute=0" allowfullscreen="allowfullscreen" allow="autoplay"
+        mozallowfullscreen="mozallowfullscreen" 
+        msallowfullscreen="msallowfullscreen" 
+        oallowfullscreen="oallowfullscreen" 
+        webkitallowfullscreen="webkitallowfullscreen")
+
+    .videoTitle
+        h1 Video Title Here
+
+    .channelNameContainer 
+        a(href=endpoint class="channelName") !{urlId}
+
+    .urlLoginBtn 
+        a(href="/login") Login or Register to Comment

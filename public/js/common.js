@@ -74,7 +74,13 @@ $("#submitSearchButton").click(() => {
         //button.prop("disabled", true);
     })
 
-    window.location.href = '/urls/' + data.content;
+    if(userLoggedIn === "") {
+        window.location.href = '/guestUrl/' + data.content;
+    }
+    else {
+        window.location.href = '/urls/' + data.content;
+    }
+
 })
 
 //https://www.youtube.com/watch?v=dQw4w9WgXcQ
@@ -84,7 +90,12 @@ $(document).on("click", ".url", (event) => {
     var urlId = getUrlIdFromElement(element);
 
     if(urlId !== undefined && !element.is("button")) {
-        window.location.href = '/urls/' + urlId;
+        if(userLoggedIn === "") {
+            window.location.href = '/guestUrl/' + urlId;
+        }
+        else {
+            window.location.href = '/urls/' + urlId;
+        }
     }
 })
 

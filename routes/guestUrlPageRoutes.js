@@ -4,9 +4,9 @@ const router = express.Router();
 const bodyParser = require("body-parser")
 const bcrypt = require('bcrypt');
 
-router.get("/", (req, res, next) => {
-    res.status(200).redirect("/");
-})
+// router.get("/", (req, res, next) => {
+//     res.status(200).redirect("/");
+// })
 
 router.get("/:id", (req, res, next) => {
 
@@ -18,7 +18,7 @@ router.get("/:id", (req, res, next) => {
         endpoint: "/channels/" + req.params.id
     }
 
-    res.status(200).render("urlPage", payload);
+    res.status(200).render("guestUrlPage", payload);
 })
 
 module.exports = router;

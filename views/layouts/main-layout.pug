@@ -11,7 +11,10 @@ html(lang="en")
         link(rel="stylesheet", href="/css/main.css")
     body
         script.
-            var userLoggedIn = !{userLoggedInJs};
+            let userLoggedIn = "";
+            if(!{userLoggedInJs} !== "")
+                userLoggedIn = !{userLoggedInJs};
+
         .wrapper
             .row
                 nav.col-2
@@ -25,9 +28,9 @@ html(lang="en")
                         i.fab.fa-youtube
                     a(href="/donate")
                         i.fas.fa-donate
-                    if(userLoggedIn != "notLoggedIn")
-                        a(href="/profile")
-                            i.fas.fa-user
+                    a(href="/profile")
+                        i.fas.fa-user
+                    if(userLoggedIn)
                         a(href="/logout")
                             i.fas.fa-sign-out-alt
                 .mainSectionContainer.col-10.col-md-8
@@ -37,11 +40,10 @@ html(lang="en")
                     block content
 
                 .d-none.d-md-block.col-md-2
-                    if(userLoggedIn == "notLoggedIn")
-                        a(href="/login")#loginBtn Login/Register
+                    span
 
             .copyrightFooter 
-                span Copyright @ 2021 ReplyTube, LLC. All Rights Reserved.
+                span Copyright @ 2021 ReplyTube. All Rights Reserved.
                 br
                 a(href="") Privacy Statement
                 span  | 

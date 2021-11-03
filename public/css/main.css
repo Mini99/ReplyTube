@@ -521,3 +521,18 @@ nav a:hover {
     color: lightgray;
     text-decoration: underline;
 }
+
+.urlLoginBtn {
+    text-align: center;
+    padding: var(--spacing);
+    border-bottom: 10px solid rgb(230, 236, 240);
+}
+
+.urlLoginBtn a {
+    background-color: var(--green);
+    border: none;
+    border-radius: 10px;
+    padding: 7px 15px;
+    color: black;
+    font-size: 24px;
+}
