@@ -29,8 +29,8 @@ router.get("/countVids", (req, res, next) => {
     });
 })
 
-router.get("/range/:start/:end", (req, res, next) => {
-    pool.query("SELECT * FROM urls ORDER BY id DESC LIMIT " + req.params.start + ", " + req.params.end, function(err, result, field){
+router.get("/range/:start", (req, res, next) => {
+    pool.query("SELECT * FROM urls ORDER BY id DESC LIMIT " + req.params.start + ", 10", function(err, result, field){
         try {
             res.status(200).send(result);
         }
