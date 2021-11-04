@@ -40,7 +40,9 @@ html(lang="en")
                     block content
 
                 .d-none.d-md-block.col-md-2
-                    span
+                    if(!userLoggedIn)
+                        .mainLoginBtn
+                            a(href="/login") Login/Sign Up
 
             .copyrightFooter 
                 span Copyright @ 2021 ReplyTube. All Rights Reserved.

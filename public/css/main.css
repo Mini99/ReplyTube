@@ -537,3 +537,15 @@ nav a:hover {
     color: black;
     font-size: 24px;
 }
+
+.mainLoginBtn {
+    padding-top: var(--spacing);
+}
+
+.mainLoginBtn a {
+    background-color: var(--green);
+    border: none;
+    border-radius: 10px;
+    padding: 7px 15px;
+    color: black;
+}
