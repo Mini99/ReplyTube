@@ -23,6 +23,11 @@ router.post("/", async (req, res, next) => {
     var email = req.body.email.trim();
     var password = req.body.password;
 
+    if(username === "" || email === "") {
+        var payload = {errorMessage: "Username or email can't be empty."};
+        return res.status(200).render("register", payload);
+    }
+
     var user = {
         username: username,
         email: email,

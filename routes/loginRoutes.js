@@ -26,6 +26,11 @@ router.post("/", (req, res, next) => {
         profilePic: null
     }
 
+    if(req.body.logUsername === "") {
+        payload.errorMessage = "Username or email can't be empty.";
+        res.status(200).render("register", payload);
+    }
+
     var payload = req.body;
 
     if(req.body.logUsername && req.body.logPassword) {
