@@ -549,3 +549,25 @@ nav a:hover {
     padding: 7px 15px;
     color: black;
 }
+
+.searchContainer #query {
+    width: 50%;
+    border: none;
+    resize: none;
+    background-color: rgb(23,23,23);
+    border: 1px solid rgb(230, 236, 240);
+    border-radius: 10px;
+    caret-color: white;
+    color: white;
+    padding: var(--spacing);
+    margin-right: var(--spacing);
+}
+
+.searchContainer #submitQuery,#showAllVids {
+    background-color: var(--green);
+    border: none;
+    border-radius: 10px;
+    padding: 7px 15px;
+    color: black;
+    margin: 3px;
+}
