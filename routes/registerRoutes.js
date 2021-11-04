@@ -26,7 +26,6 @@ router.post("/", async (req, res, next) => {
     var user = {
         username: username,
         email: email,
-        password: password,
         profilePic: "/images/profilePic.jpg"
     }
 

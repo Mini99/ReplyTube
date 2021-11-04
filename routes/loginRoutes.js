@@ -23,7 +23,6 @@ router.post("/", (req, res, next) => {
     var user = {
         username: req.body.logUsername,
         email: null,
-        password: req.body.logPassword,
         profilePic: null
     }
 
