@@ -8,7 +8,9 @@ const mysql = require('mysql')
 router.get("/", (req, res, next) => {
 
     var payload = {
-        pageTitle: "Donate"
+        pageTitle: "ReplyTube",
+        userLoggedIn: req.session.user,
+        userLoggedInJs: JSON.stringify(req.session.user),
     }
 
     res.status(200).render("donate", payload);
